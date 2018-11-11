@@ -3,6 +3,7 @@ package com.example.mrfre.pova;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -12,10 +13,14 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
+    DataBaseHelper myDB = new DataBaseHelper(this);
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        myDB.insertData("Natural-Cut French Fries - Small", 300, 1.95, "Premium-quality, Skin-on, Natural Cut French Fries.");
 
         ListView resList = (ListView)findViewById(R.id.resListView);
         ArrayList<String> restaurants = new ArrayList<>();

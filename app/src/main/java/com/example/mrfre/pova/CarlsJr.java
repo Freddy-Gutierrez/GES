@@ -19,8 +19,9 @@ public class CarlsJr extends AppCompatActivity {
     ExpandableListView expandableListView;
     ExpandableListAdapter expandableListAdapter;
     List<String> items = new ArrayList<>();
-    List<String> burgerCustoms = new ArrayList<>();
-    List<String> friesCustoms = new ArrayList<>();
+    List<String> bigCarlCustoms = new ArrayList<>();
+    List<String> westernBaconCustoms = new ArrayList<>();
+    List<String> sideOptions = new ArrayList<>();
     List<String> drinkOptions = new ArrayList<>();
     List<String> dessertOptions = new ArrayList<>();
     HashMap<String, List<String>> listDataChild;
@@ -31,39 +32,50 @@ public class CarlsJr extends AppCompatActivity {
         
         listDataChild = new HashMap<String, List<String>>();
         //drop down headers
-        items.add("Burger");items.add("Fries");items.add("Drinks");items.add("Desserts");
-        //burger drop down items
-        burgerCustoms.add("pickles");burgerCustoms.add("onions");burgerCustoms.add("cheese");burgerCustoms.add("ketchup");
+        items.add("BIG CARL");items.add("DOUBLE WESTERN BACON CHEESEBURGER");items.add("SIDES");items.add("DRINKS");items.add("DESSERTS");
+        //big carls drop down items
+        bigCarlCustoms.add("lettuce");bigCarlCustoms.add("classic sauce");
+        //western bacon customs
+        westernBaconCustoms.add("Thick-Cut Applewood-Smoked Bacon");westernBaconCustoms.add("Onion Rings");westernBaconCustoms.add("BBQ Sauce");
         //Fries drop down customizations
-        friesCustoms.add("Light");friesCustoms.add("Crispy");friesCustoms.add("Extra Salt");friesCustoms.add("Plain");
+        sideOptions.add("Natural-Cut French Fries - Small");sideOptions.add("Natural-Cut French Fries - Medium");sideOptions.add("Natural-Cut French Fries - Large");sideOptions.add("Crisscut® Fries");sideOptions.add("Onion Rings");sideOptions.add("Fried Zucchhini");
         //Drink drop down options
-        drinkOptions.add("Coke");drinkOptions.add("Pepsi");drinkOptions.add("Sprite");drinkOptions.add("Dr.Pepper");drinkOptions.add("Powerade");
+        drinkOptions.add("Fuze® Raspberry Tea");drinkOptions.add("Gold Peak® Iced Tea");drinkOptions.add("Coca-Cola®");drinkOptions.add("Diet Coke®");drinkOptions.add("Coca-Cola Zero™");
+        drinkOptions.add("Sprite®");drinkOptions.add("Barq’s® Rootbeer");drinkOptions.add("Powerade® Mountain Blast");drinkOptions.add("Cherry Coke®");drinkOptions.add("Hi-C® Flashin’ Fruit Punch");drinkOptions.add("Dr Pepper®");
+        drinkOptions.add("Diet Dr Pepper®");drinkOptions.add("Fanta® Orange");drinkOptions.add("Fanta® Strawberry");drinkOptions.add("Minute Maid Light™ Lemonade");drinkOptions.add("Vanilla Hand-Scooped Ice Cream Shake™");drinkOptions.add("Chocolate Hand-Scooped Ice Cream Shake™");
+        drinkOptions.add("Strawberry Hand-Scooped Ice Cream Shake™");drinkOptions.add("Oreo® Cookie Hand-Scooped Ice Cream Shake™");drinkOptions.add("Monster Energy®");drinkOptions.add("Sprite®");drinkOptions.add("Dasani® Water");drinkOptions.add("Colombian Blend Coffee");
+        drinkOptions.add("Decaffeinated Coffee");drinkOptions.add("Minute Maid® Orange Juice");drinkOptions.add("1% Fat Milk");
         //Desserts drop down options
-        dessertOptions.add("Chocolate Chip Cookies");dessertOptions.add("Hershey's Pie");dessertOptions.add("Apple Pie");dessertOptions.add("Chocolate Milkshake");dessertOptions.add("Vanilla Milkshake");
+        dessertOptions.add("Chocolate Chip Cookies");dessertOptions.add("Strawberry Swirl Cheesecake");dessertOptions.add("Chocolate Cake");dessertOptions.add("Jolly Rancher Milkshake");
         expandableListView = (ExpandableListView)findViewById(R.id.lvExp);
         expandableListAdapter = new com.example.mrfre.pova.ExpandableListAdapter(this, items, listDataChild);
         expandableListView.setAdapter(expandableListAdapter);
 
         //Add items to List holding all headers for drop down menu in the first arguement, and the list holding drop down selections in the other
-        listDataChild.put(items.get(0), burgerCustoms);
-        listDataChild.put(items.get(1), friesCustoms);
-        listDataChild.put(items.get(2), drinkOptions);
-        listDataChild.put(items.get(3), dessertOptions);
+        listDataChild.put(items.get(0), bigCarlCustoms);
+        listDataChild.put(items.get(1), westernBaconCustoms);
+        listDataChild.put(items.get(2), sideOptions);
+        listDataChild.put(items.get(3), drinkOptions);
+        listDataChild.put(items.get(4
+        ), dessertOptions);
 
         expandableListView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
             @Override
             public boolean onChildClick(ExpandableListView expandableListView, View view, int i, int i1, long l) {
                 switch (i){
                     case 0:
-                        alertBoxBurger(i1);
+                        alertBoxBigCarl(i1);
                         break;
                     case 1:
-                        alertBoxFries(i1);
-                        break;
-                    case 2:
-                        alertBoxDrinks(i1);
+                        alertBoxDoubleWestern(i1);
                         break;
                     case 3:
+                        alertBoxSides(i1);
+                        break;
+                    case 4:
+                        alertBoxDrinks(i1);
+                        break;
+                    case 5:
                         alertBoxDesserts(i1);
                         break;
                     default:
@@ -74,16 +86,121 @@ public class CarlsJr extends AppCompatActivity {
         });
     }
 
+    private void alertBoxDoubleWestern(int i1) {
+    }
+
     private void alertBoxDesserts(int listInd) {
+        String selection = "";
+        switch (listInd){
+            case 0:
+                selection = "pickles";
+                break;
+            case 1:
+                selection = "onion";
+                break;
+            case 2:
+                selection = "cheese";
+                break;
+            case 3:
+                selection = "ketchup";
+                break;
+            case 4:
+            default:
+        }
+        final String finalSelection = selection;
+        new AlertDialog.Builder(CarlsJr.this)
+                .setTitle("Burger Customization")
+                .setMessage("Would you like to add " + selection + "?")
+                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        Toast.makeText(CarlsJr.this, finalSelection + " added to burger", Toast.LENGTH_LONG).show();
+                    }
+                })
+                .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        Toast.makeText(CarlsJr.this, finalSelection + " removed from burger", Toast.LENGTH_LONG).show();
+                    }
+                })
+                .show();
     }
 
     private void alertBoxDrinks(int listInd) {
+        String selection = "";
+        switch (listInd){
+            case 0:
+                selection = "pickles";
+                break;
+            case 1:
+                selection = "onion";
+                break;
+            case 2:
+                selection = "cheese";
+                break;
+            case 3:
+                selection = "ketchup";
+                break;
+            case 4:
+            default:
+        }
+        final String finalSelection = selection;
+        new AlertDialog.Builder(CarlsJr.this)
+                .setTitle("Burger Customization")
+                .setMessage("Would you like to add " + selection + "?")
+                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        Toast.makeText(CarlsJr.this, finalSelection + " added to burger", Toast.LENGTH_LONG).show();
+                    }
+                })
+                .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        Toast.makeText(CarlsJr.this, finalSelection + " removed from burger", Toast.LENGTH_LONG).show();
+                    }
+                })
+                .show();
     }
 
-    private void alertBoxFries(int listInd) {
+    private void alertBoxSides(int listInd) {
+        String selection = "";
+        switch (listInd){
+            case 0:
+                selection = "pickles";
+                break;
+            case 1:
+                selection = "onion";
+                break;
+            case 2:
+                selection = "cheese";
+                break;
+            case 3:
+                selection = "ketchup";
+                break;
+            case 4:
+            default:
+        }
+        final String finalSelection = selection;
+        new AlertDialog.Builder(CarlsJr.this)
+                .setTitle("Burger Customization")
+                .setMessage("Would you like to add " + selection + "?")
+                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        Toast.makeText(CarlsJr.this, finalSelection + " added to burger", Toast.LENGTH_LONG).show();
+                    }
+                })
+                .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        Toast.makeText(CarlsJr.this, finalSelection + " removed from burger", Toast.LENGTH_LONG).show();
+                    }
+                })
+                .show();
     }
 
-    private void alertBoxBurger(int listInd){
+    private void alertBoxBigCarl(int listInd){
         String selection = "";
         switch (listInd){
             case 0:
