@@ -20,7 +20,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        myDB.insertData("Natural-Cut French Fries - Small", 300, 1.95, "Premium-quality, Skin-on, Natural Cut French Fries.");
+        myDB.clearTable();
+        myDB.insertData("Big Carl®", 920, 6.95, "Two charbroiled beef patties, our classic sauce, two slices of American cheese, and lettuce all on a seeded bun.", "Lettuce Pickles Onions");
 
         ListView resList = (ListView)findViewById(R.id.resListView);
         ArrayList<String> restaurants = new ArrayList<>();

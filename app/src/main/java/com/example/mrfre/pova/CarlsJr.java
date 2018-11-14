@@ -1,6 +1,9 @@
 package com.example.mrfre.pova;
 
 import android.content.DialogInterface;
+import android.content.res.Resources;
+import android.database.Cursor;
+import android.graphics.drawable.Drawable;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -15,16 +18,26 @@ import java.util.List;
 
 public class CarlsJr extends AppCompatActivity {
 
-    
+    //data structures and views that will be used to set up UI
     ExpandableListView expandableListView;
     ExpandableListAdapter expandableListAdapter;
     List<String> items = new ArrayList<>();
-    List<String> bigCarlCustoms = new ArrayList<>();
-    List<String> westernBaconCustoms = new ArrayList<>();
+    List<String> burgers = new ArrayList<>();
     List<String> sideOptions = new ArrayList<>();
     List<String> drinkOptions = new ArrayList<>();
     List<String> dessertOptions = new ArrayList<>();
     HashMap<String, List<String>> listDataChild;
+    Drawable image;
+
+    //database instance
+    DataBaseHelper myDB = new DataBaseHelper(CarlsJr.this);
+
+    //instances to store information about the item selected
+    String name = "";
+    String description = "";
+    int calories = 0;
+    double price = 0.0;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,11 +45,13 @@ public class CarlsJr extends AppCompatActivity {
         
         listDataChild = new HashMap<String, List<String>>();
         //drop down headers
-        items.add("BIG CARL");items.add("DOUBLE WESTERN BACON CHEESEBURGER");items.add("SIDES");items.add("DRINKS");items.add("DESSERTS");
+        items.add("BURGERS");items.add("SIDES");items.add("DRINKS");items.add("DESSERTS");
         //big carls drop down items
-        bigCarlCustoms.add("lettuce");bigCarlCustoms.add("classic sauce");
+//        burgers.add("lettuce");burgers.add("classic sauce");
         //western bacon customs
-        westernBaconCustoms.add("Thick-Cut Applewood-Smoked Bacon");westernBaconCustoms.add("Onion Rings");westernBaconCustoms.add("BBQ Sauce");
+//        westernBaconCustoms.add("Thick-Cut Applewood-Smoked Bacon");westernBaconCustoms.add("Onion Rings");westernBaconCustoms.add("BBQ Sauce");
+        //burger drop down menu
+        burgers.add("Big Carl®");burgers.add("Double Western Bacon Cheeseburger®");
         //Fries drop down customizations
         sideOptions.add("Natural-Cut French Fries - Small");sideOptions.add("Natural-Cut French Fries - Medium");sideOptions.add("Natural-Cut French Fries - Large");sideOptions.add("Crisscut® Fries");sideOptions.add("Onion Rings");sideOptions.add("Fried Zucchhini");
         //Drink drop down options
@@ -52,30 +67,25 @@ public class CarlsJr extends AppCompatActivity {
         expandableListView.setAdapter(expandableListAdapter);
 
         //Add items to List holding all headers for drop down menu in the first arguement, and the list holding drop down selections in the other
-        listDataChild.put(items.get(0), bigCarlCustoms);
-        listDataChild.put(items.get(1), westernBaconCustoms);
-        listDataChild.put(items.get(2), sideOptions);
-        listDataChild.put(items.get(3), drinkOptions);
-        listDataChild.put(items.get(4
-        ), dessertOptions);
+        listDataChild.put(items.get(0), burgers);
+        listDataChild.put(items.get(1), sideOptions);
+        listDataChild.put(items.get(2), drinkOptions);
+        listDataChild.put(items.get(3), dessertOptions);
 
         expandableListView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
             @Override
             public boolean onChildClick(ExpandableListView expandableListView, View view, int i, int i1, long l) {
                 switch (i){
                     case 0:
-                        alertBoxBigCarl(i1);
+                        alertBoxBurger(i1);
                         break;
-                    case 1:
-                        alertBoxDoubleWestern(i1);
-                        break;
-                    case 3:
+                    case 2:
                         alertBoxSides(i1);
                         break;
-                    case 4:
+                    case 3:
                         alertBoxDrinks(i1);
                         break;
-                    case 5:
+                    case 4:
                         alertBoxDesserts(i1);
                         break;
                     default:
@@ -86,7 +96,50 @@ public class CarlsJr extends AppCompatActivity {
         });
     }
 
-    private void alertBoxDoubleWestern(int i1) {
+    private void alertBoxBurger(int listInd) {
+        String selection = "";
+        switch (listInd){
+            case 0:
+                selection = "Big Carl®";
+                break;
+            case 1:
+                selection = "Double Western Bacon Cheeseburger®";
+                break;
+            default:
+        }
+        final String finalSelection = selection;
+        Cursor cursor = myDB.getData(finalSelection);
+        while(cursor.moveToNext()){
+            name = cursor.getString(1);
+            calories = cursor.getInt(2);
+            price = cursor.getDouble(3);
+            description = cursor.getString(4);
+        }
+        new AlertDialog.Builder(CarlsJr.this)
+                .setTitle(name)
+                .setMessage("Description: " + description + "\n" +
+                            "\nCalories: " + calories + "\n" +
+                            "\nPrice: " + price + "\n" +
+                            "\nWould you like to add a " + name + " to your cart?")
+                .setIcon(R.drawable.carlslogo)
+                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        Toast.makeText(CarlsJr.this, finalSelection + " added to cart", Toast.LENGTH_LONG).show();
+                    }
+                })
+                .setNeutralButton("Edit", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        Toast.makeText(CarlsJr.this, finalSelection + " will be edited", Toast.LENGTH_LONG).show();
+                    }
+                })
+                .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        Toast.makeText(CarlsJr.this, finalSelection + " removed from cart", Toast.LENGTH_LONG).show();
+                    }
+                }).show();
     }
 
     private void alertBoxDesserts(int listInd) {
@@ -122,8 +175,7 @@ public class CarlsJr extends AppCompatActivity {
                     public void onClick(DialogInterface dialogInterface, int i) {
                         Toast.makeText(CarlsJr.this, finalSelection + " removed from burger", Toast.LENGTH_LONG).show();
                     }
-                })
-                .show();
+                }).show();
     }
 
     private void alertBoxDrinks(int listInd) {

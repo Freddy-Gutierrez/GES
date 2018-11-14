@@ -11,12 +11,13 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 
     public static final String DATABASE_NAME = "Menu_item.db";
     public static final String TABLE_NAME = "Menu_item";
-    private static final int DATABASE_VERSION = 1;
+    private static final int DATABASE_VERSION = 2;
     String COL_0 = "ID";
     String COL_1 = "NAME";
     String COL_2 = "CALORIES";
     String COL_3 = "PRICE";
     String COL_4 = "DESCRIPTION";
+    String COL_5 = "CUSTOMIZATIONS";
 
 
 
@@ -26,7 +27,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
-        sqLiteDatabase.execSQL("CREATE TABLE " + TABLE_NAME + "(ID INTEGER PRIMARY KEY, NAME TEXT, CALORIES INTEGER, PRICE DOUBLE, DESCRIPTION TEXT )");
+        sqLiteDatabase.execSQL("CREATE TABLE " + TABLE_NAME + "(ID INTEGER PRIMARY KEY, NAME TEXT, CALORIES INTEGER, PRICE DOUBLE, DESCRIPTION TEXT, CUSTOMIZATIONS TEXT )");
     }
 
     @Override
@@ -36,13 +37,14 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         onCreate(sqLiteDatabase);
     }
 
-    public boolean insertData(String name, int calories, double price, String description ){
+    public boolean insertData(String name, int calories, double price, String description, String customs ){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(COL_1, name);
         values.put(COL_2, calories);
         values.put(COL_3, price);
         values.put(COL_4, description);
+        values.put(COL_5, customs);
 
         long result = db.insert(TABLE_NAME, null, values);
         if(result == -1)
@@ -52,15 +54,15 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     }
 
 
-    //retrieves all data in the table in descending order by score
-    public Cursor getAllData(){
+    //retrieves data from table that matches name of the item
+    public Cursor getData(String itemName){
         SQLiteDatabase db = this.getWritableDatabase();
-        Cursor res = db.query(TABLE_NAME, null, null, null, null, null, null, null);
+        Cursor res = db.rawQuery("SELECT * FROM " + TABLE_NAME + " WHERE NAME = ?", new String[]{itemName});
         return res;
     }
 
 
-    public boolean updateData(String id, String name, int calories, double price , String description){
+    public boolean updateData(String id, String name, int calories, double price , String description, String customs){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(COL_0, id);
@@ -68,6 +70,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         values.put(COL_2, calories);
         values.put(COL_3, price);
         values.put(COL_4, description);
+        values.put(COL_5, customs);
         db.update(TABLE_NAME, values, "ID = ?", new String[]{id});
         return true;
     }
