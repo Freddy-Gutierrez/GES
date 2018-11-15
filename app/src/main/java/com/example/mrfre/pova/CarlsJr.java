@@ -1,6 +1,7 @@
 package com.example.mrfre.pova;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.res.Resources;
 import android.database.Cursor;
 import android.graphics.drawable.Drawable;
@@ -35,6 +36,7 @@ public class CarlsJr extends AppCompatActivity {
     //instances to store information about the item selected
     String name = "";
     String description = "";
+    String customs = "";
     int calories = 0;
     double price = 0.0;
 
@@ -46,20 +48,20 @@ public class CarlsJr extends AppCompatActivity {
         listDataChild = new HashMap<String, List<String>>();
         //drop down headers
         items.add("BURGERS");items.add("SIDES");items.add("DRINKS");items.add("DESSERTS");
-        //big carls drop down items
-//        burgers.add("lettuce");burgers.add("classic sauce");
-        //western bacon customs
-//        westernBaconCustoms.add("Thick-Cut Applewood-Smoked Bacon");westernBaconCustoms.add("Onion Rings");westernBaconCustoms.add("BBQ Sauce");
+
         //burger drop down menu
         burgers.add("Big Carl®");burgers.add("Double Western Bacon Cheeseburger®");
+
         //Fries drop down customizations
         sideOptions.add("Natural-Cut French Fries - Small");sideOptions.add("Natural-Cut French Fries - Medium");sideOptions.add("Natural-Cut French Fries - Large");sideOptions.add("Crisscut® Fries");sideOptions.add("Onion Rings");sideOptions.add("Fried Zucchhini");
+
         //Drink drop down options
         drinkOptions.add("Fuze® Raspberry Tea");drinkOptions.add("Gold Peak® Iced Tea");drinkOptions.add("Coca-Cola®");drinkOptions.add("Diet Coke®");drinkOptions.add("Coca-Cola Zero™");
         drinkOptions.add("Sprite®");drinkOptions.add("Barq’s® Rootbeer");drinkOptions.add("Powerade® Mountain Blast");drinkOptions.add("Cherry Coke®");drinkOptions.add("Hi-C® Flashin’ Fruit Punch");drinkOptions.add("Dr Pepper®");
         drinkOptions.add("Diet Dr Pepper®");drinkOptions.add("Fanta® Orange");drinkOptions.add("Fanta® Strawberry");drinkOptions.add("Minute Maid Light™ Lemonade");drinkOptions.add("Vanilla Hand-Scooped Ice Cream Shake™");drinkOptions.add("Chocolate Hand-Scooped Ice Cream Shake™");
         drinkOptions.add("Strawberry Hand-Scooped Ice Cream Shake™");drinkOptions.add("Oreo® Cookie Hand-Scooped Ice Cream Shake™");drinkOptions.add("Monster Energy®");drinkOptions.add("Sprite®");drinkOptions.add("Dasani® Water");drinkOptions.add("Colombian Blend Coffee");
         drinkOptions.add("Decaffeinated Coffee");drinkOptions.add("Minute Maid® Orange Juice");drinkOptions.add("1% Fat Milk");
+
         //Desserts drop down options
         dessertOptions.add("Chocolate Chip Cookies");dessertOptions.add("Strawberry Swirl Cheesecake");dessertOptions.add("Chocolate Cake");dessertOptions.add("Jolly Rancher Milkshake");
         expandableListView = (ExpandableListView)findViewById(R.id.lvExp);
@@ -97,6 +99,7 @@ public class CarlsJr extends AppCompatActivity {
     }
 
     private void alertBoxBurger(int listInd) {
+        //Create String to save user selection from expandable LV
         String selection = "";
         switch (listInd){
             case 0:
@@ -107,6 +110,10 @@ public class CarlsJr extends AppCompatActivity {
                 break;
             default:
         }
+        /* use given string to query database
+           use cursor object to get all data from database
+           save that data into appropriate instances
+        */
         final String finalSelection = selection;
         Cursor cursor = myDB.getData(finalSelection);
         while(cursor.moveToNext()){
@@ -114,7 +121,11 @@ public class CarlsJr extends AppCompatActivity {
             calories = cursor.getInt(2);
             price = cursor.getDouble(3);
             description = cursor.getString(4);
+            customs = cursor.getString(5);
         }
+        /*
+            Display an alertbox to the user with data query'd from database
+         */
         new AlertDialog.Builder(CarlsJr.this)
                 .setTitle(name)
                 .setMessage("Description: " + description + "\n" +
@@ -131,6 +142,15 @@ public class CarlsJr extends AppCompatActivity {
                 .setNeutralButton("Edit", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
+                        /*create intent to switch activity to EditItemMenu activity
+                        pass item name and customizations to EditItemMenu
+                        start EditItemMenu Activity and finish this activity
+                        */
+                        Intent intent = new Intent(CarlsJr.this, EditItemMenu.class);
+                        intent.putExtra("itemName", name);
+                        intent.putExtra("customs", customs);
+                        startActivity(intent);
+                        finish();
                         Toast.makeText(CarlsJr.this, finalSelection + " will be edited", Toast.LENGTH_LONG).show();
                     }
                 })

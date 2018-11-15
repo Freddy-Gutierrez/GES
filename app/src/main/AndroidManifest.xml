@@ -20,7 +20,8 @@
         <activity android:name=".CarlsJr" />
         <activity android:name=".JohnnysKitchen" />
         <activity android:name=".ElPolloLoco" />
-        <activity android:name=".RiceGarden"></activity>
+        <activity android:name=".RiceGarden" />
+        <activity android:name=".EditItemMenu"></activity>
     </application>
 
 </manifest>
