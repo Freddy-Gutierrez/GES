@@ -34,6 +34,7 @@ public class CarlsJr extends AppCompatActivity {
     DataBaseHelper myDB = new DataBaseHelper(CarlsJr.this);
 
     //instances to store information about the item selected
+    String selection = "";
     String name = "";
     String description = "";
     String customs = "";
@@ -81,13 +82,13 @@ public class CarlsJr extends AppCompatActivity {
                     case 0:
                         alertBoxBurger(i1);
                         break;
-                    case 2:
+                    case 1:
                         alertBoxSides(i1);
                         break;
-                    case 3:
+                    case 2:
                         alertBoxDrinks(i1);
                         break;
-                    case 4:
+                    case 3:
                         alertBoxDesserts(i1);
                         break;
                     default:
@@ -100,7 +101,6 @@ public class CarlsJr extends AppCompatActivity {
 
     private void alertBoxBurger(int listInd) {
         //Create String to save user selection from expandable LV
-        String selection = "";
         switch (listInd){
             case 0:
                 selection = "Big Carl®";
@@ -114,8 +114,7 @@ public class CarlsJr extends AppCompatActivity {
            use cursor object to get all data from database
            save that data into appropriate instances
         */
-        final String finalSelection = selection;
-        Cursor cursor = myDB.getData(finalSelection);
+        Cursor cursor = myDB.getData(selection);
         while(cursor.moveToNext()){
             name = cursor.getString(1);
             calories = cursor.getInt(2);
@@ -123,20 +122,37 @@ public class CarlsJr extends AppCompatActivity {
             description = cursor.getString(4);
             customs = cursor.getString(5);
         }
+        createDialogueBox();
+    }
+
+    private void alertBoxDesserts(int listInd) {
+
+    }
+
+    private void alertBoxDrinks(int listInd) {
+
+    }
+
+    private void alertBoxSides(int listInd) {
+
+    }
+
+
+    private void createDialogueBox(){
         /*
             Display an alertbox to the user with data query'd from database
          */
         new AlertDialog.Builder(CarlsJr.this)
                 .setTitle(name)
                 .setMessage("Description: " + description + "\n" +
-                            "\nCalories: " + calories + "\n" +
-                            "\nPrice: " + price + "\n" +
-                            "\nWould you like to add a " + name + " to your cart?")
+                        "\nCalories: " + calories + "\n" +
+                        "\nPrice: " + price + "\n" +
+                        "\nWould you like to add a " + name + " to your cart?")
                 .setIcon(R.drawable.carlslogo)
                 .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        Toast.makeText(CarlsJr.this, finalSelection + " added to cart", Toast.LENGTH_LONG).show();
+                        Toast.makeText(CarlsJr.this, selection + " added to cart", Toast.LENGTH_LONG).show();
                     }
                 })
                 .setNeutralButton("Edit", new DialogInterface.OnClickListener() {
@@ -151,163 +167,15 @@ public class CarlsJr extends AppCompatActivity {
                         intent.putExtra("customs", customs);
                         startActivity(intent);
                         finish();
-                        Toast.makeText(CarlsJr.this, finalSelection + " will be edited", Toast.LENGTH_LONG).show();
+                        Toast.makeText(CarlsJr.this, selection + " will be edited", Toast.LENGTH_LONG).show();
                     }
                 })
                 .setNegativeButton("No", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        Toast.makeText(CarlsJr.this, finalSelection + " removed from cart", Toast.LENGTH_LONG).show();
+                        Toast.makeText(CarlsJr.this, selection
+                                + " removed from cart", Toast.LENGTH_LONG).show();
                     }
                 }).show();
     }
-
-    private void alertBoxDesserts(int listInd) {
-        String selection = "";
-        switch (listInd){
-            case 0:
-                selection = "pickles";
-                break;
-            case 1:
-                selection = "onion";
-                break;
-            case 2:
-                selection = "cheese";
-                break;
-            case 3:
-                selection = "ketchup";
-                break;
-            case 4:
-            default:
-        }
-        final String finalSelection = selection;
-        new AlertDialog.Builder(CarlsJr.this)
-                .setTitle("Burger Customization")
-                .setMessage("Would you like to add " + selection + "?")
-                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        Toast.makeText(CarlsJr.this, finalSelection + " added to burger", Toast.LENGTH_LONG).show();
-                    }
-                })
-                .setNegativeButton("No", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        Toast.makeText(CarlsJr.this, finalSelection + " removed from burger", Toast.LENGTH_LONG).show();
-                    }
-                }).show();
-    }
-
-    private void alertBoxDrinks(int listInd) {
-        String selection = "";
-        switch (listInd){
-            case 0:
-                selection = "pickles";
-                break;
-            case 1:
-                selection = "onion";
-                break;
-            case 2:
-                selection = "cheese";
-                break;
-            case 3:
-                selection = "ketchup";
-                break;
-            case 4:
-            default:
-        }
-        final String finalSelection = selection;
-        new AlertDialog.Builder(CarlsJr.this)
-                .setTitle("Burger Customization")
-                .setMessage("Would you like to add " + selection + "?")
-                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        Toast.makeText(CarlsJr.this, finalSelection + " added to burger", Toast.LENGTH_LONG).show();
-                    }
-                })
-                .setNegativeButton("No", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        Toast.makeText(CarlsJr.this, finalSelection + " removed from burger", Toast.LENGTH_LONG).show();
-                    }
-                })
-                .show();
-    }
-
-    private void alertBoxSides(int listInd) {
-        String selection = "";
-        switch (listInd){
-            case 0:
-                selection = "pickles";
-                break;
-            case 1:
-                selection = "onion";
-                break;
-            case 2:
-                selection = "cheese";
-                break;
-            case 3:
-                selection = "ketchup";
-                break;
-            case 4:
-            default:
-        }
-        final String finalSelection = selection;
-        new AlertDialog.Builder(CarlsJr.this)
-                .setTitle("Burger Customization")
-                .setMessage("Would you like to add " + selection + "?")
-                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        Toast.makeText(CarlsJr.this, finalSelection + " added to burger", Toast.LENGTH_LONG).show();
-                    }
-                })
-                .setNegativeButton("No", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        Toast.makeText(CarlsJr.this, finalSelection + " removed from burger", Toast.LENGTH_LONG).show();
-                    }
-                })
-                .show();
-    }
-
-    private void alertBoxBigCarl(int listInd){
-        String selection = "";
-        switch (listInd){
-            case 0:
-                selection = "pickles";
-                break;
-            case 1:
-                selection = "onion";
-                break;
-            case 2:
-                selection = "cheese";
-                break;
-            case 3:
-                selection = "ketchup";
-                break;
-            case 4:
-            default:
-        }
-        final String finalSelection = selection;
-        new AlertDialog.Builder(CarlsJr.this)
-                .setTitle("Burger Customization")
-                .setMessage("Would you like to add " + selection + "?")
-                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        Toast.makeText(CarlsJr.this, finalSelection + " added to burger", Toast.LENGTH_LONG).show();
-                    }
-                })
-                .setNegativeButton("No", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        Toast.makeText(CarlsJr.this, finalSelection + " removed from burger", Toast.LENGTH_LONG).show();
-                    }
-                })
-                .show();
-    }
-
-
 }
