@@ -60,7 +60,7 @@ public class CarlsJr extends AppCompatActivity {
         drinkOptions.add("Fuze® Raspberry Tea");drinkOptions.add("Gold Peak® Iced Tea");drinkOptions.add("Coca-Cola®");drinkOptions.add("Diet Coke®");drinkOptions.add("Coca-Cola Zero™");
         drinkOptions.add("Sprite®");drinkOptions.add("Barq’s® Rootbeer");drinkOptions.add("Powerade® Mountain Blast");drinkOptions.add("Cherry Coke®");drinkOptions.add("Hi-C® Flashin’ Fruit Punch");drinkOptions.add("Dr Pepper®");
         drinkOptions.add("Diet Dr Pepper®");drinkOptions.add("Fanta® Orange");drinkOptions.add("Fanta® Strawberry");drinkOptions.add("Minute Maid Light™ Lemonade");drinkOptions.add("Vanilla Hand-Scooped Ice Cream Shake™");drinkOptions.add("Chocolate Hand-Scooped Ice Cream Shake™");
-        drinkOptions.add("Strawberry Hand-Scooped Ice Cream Shake™");drinkOptions.add("Oreo® Cookie Hand-Scooped Ice Cream Shake™");drinkOptions.add("Monster Energy®");drinkOptions.add("Sprite®");drinkOptions.add("Dasani® Water");drinkOptions.add("Colombian Blend Coffee");
+        drinkOptions.add("Strawberry Hand-Scooped Ice Cream Shake™");drinkOptions.add("Oreo® Cookie Hand-Scooped Ice Cream Shake™");drinkOptions.add("Monster Energy®");drinkOptions.add("Dasani® Water");drinkOptions.add("Colombian Blend Coffee");
         drinkOptions.add("Decaffeinated Coffee");drinkOptions.add("Minute Maid® Orange Juice");drinkOptions.add("1% Fat Milk");
 
         //Desserts drop down options
@@ -111,8 +111,8 @@ public class CarlsJr extends AppCompatActivity {
             default:
         }
         /* use given string to query database
-           use cursor object to get all data from database
-           save that data into appropriate instances
+        use cursor object to get all data from database
+        save that data into appropriate instances
         */
         Cursor cursor = myDB.getData(selection);
         while(cursor.moveToNext()){
@@ -125,16 +125,164 @@ public class CarlsJr extends AppCompatActivity {
         createDialogueBox();
     }
 
-    private void alertBoxDesserts(int listInd) {
+    //Same as alertBoxBurger
+    private void alertBoxSides(int listInd) {
+        switch (listInd){
+            case 0:
+                selection = "Natural-Cut French Fries - Small";
+                break;
+            case 1:
+                selection = "Natural-Cut French Fries - Medium";
+                break;
+            case 2:
+                selection = "Natural-Cut French Fries - Large";
+                break;
+            case 3:
+                selection = "Crisscut® Fries";
+                break;
+            case 4:
+                selection = "Onion Rings";
+                break;
+            case 5:
+                selection = "Fried Zucchhini";
+                break;
+            default:
+        }
+
+        Cursor cursor = myDB.getData(selection);
+        while(cursor.moveToNext()){
+            name = cursor.getString(1);
+            calories = cursor.getInt(2);
+            price = cursor.getDouble(3);
+            description = cursor.getString(4);
+            customs = cursor.getString(5);
+        }
+        createDialogueBox();
+
 
     }
 
     private void alertBoxDrinks(int listInd) {
 
+        switch (listInd){
+            case 0:
+                selection = "Fuze® Raspberry Tea";
+                break;
+            case 1:
+                selection = "Gold Peak® Iced Tea";
+                break;
+            case 2:
+                selection = "Coca-Cola®";
+                break;
+            case 3:
+                selection = "Diet Coke®";
+                break;
+            case 4:
+                selection = "Coca-Cola Zero™";
+                break;
+            case 5:
+                selection = "Sprite®";
+                break;
+            case 6:
+                selection = "Barq’s® Rootbeer";
+                break;
+            case 7:
+                selection = "Powerade® Mountain Blast";
+                break;
+            case 8:
+                selection = "Cherry Coke®";
+                break;
+            case 9:
+                selection = "Hi-C® Flashin’ Fruit Punch";
+                break;
+            case 10:
+                selection = "Dr Pepper®";
+                break;
+            case 11:
+                selection = "Diet Dr Pepper®";
+                break;
+            case 12:
+                selection = "Fanta® Orange";
+                break;
+            case 13:
+                selection = "Fanta® Strawberry";
+                break;
+            case 14:
+                selection = "Minute Maid Light™ Lemonade";
+                break;
+            case 15:
+                selection = "Vanilla Hand-Scooped Ice Cream Shake™";
+                break;
+            case 16:
+                selection = "Chocolate Hand-Scooped Ice Cream Shake™";
+                break;
+            case 17:
+                selection = "Strawberry Hand-Scooped Ice Cream Shake™";
+                break;
+            case 18:
+                selection = "Oreo® Cookie Hand-Scooped Ice Cream Shake™";
+                break;
+            case 19:
+                selection = "Monster Energy®";
+                break;
+            case 20:
+                selection = "Dasani® Water";
+                break;
+            case 21:
+                selection = "Colombian Blend Coffee";
+                break;
+            case 22:
+                selection = "Decaffeinated Coffee";
+                break;
+            case 23:
+                selection = "Minute Maid® Orange Juice";
+                break;
+            case 24:
+                selection = "1% Fat Milk";
+                break;
+            default:
+        }
+
+
+        Cursor cursor = myDB.getData(selection);
+        while(cursor.moveToNext()){
+            name = cursor.getString(1);
+            calories = cursor.getInt(2);
+            price = cursor.getDouble(3);
+            description = cursor.getString(4);
+            customs = cursor.getString(5);
+        }
+        createDialogueBox();
+
     }
 
-    private void alertBoxSides(int listInd) {
+    private void alertBoxDesserts(int listInd) {
 
+        switch (listInd){
+            case 0:
+                selection = "Chocolate Chip Cookies";
+                break;
+            case 1:
+                selection = "Strawberry Swirl Cheesecake";
+                break;
+            case 2:
+                selection = "Chocolate Cake";
+                break;
+            case 3:
+                selection = "Jolly Rancher Milkshake";
+                break;
+            default:
+        }
+
+        Cursor cursor = myDB.getData(selection);
+        while(cursor.moveToNext()){
+            name = cursor.getString(1);
+            calories = cursor.getInt(2);
+            price = cursor.getDouble(3);
+            description = cursor.getString(4);
+            customs = cursor.getString(5);
+        }
+        createDialogueBox();
     }
 
 

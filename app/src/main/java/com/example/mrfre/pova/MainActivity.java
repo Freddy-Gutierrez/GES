@@ -23,6 +23,8 @@ public class MainActivity extends AppCompatActivity {
         myDB.clearTable();
         myDB.insertData("Big Carl®", 920, 6.95, "Two charbroiled beef patties, our classic sauce, two slices of American cheese, and lettuce all on a seeded bun.", "Lettuce,Pickles,Onions");
         myDB.insertData("Double Western Bacon Cheeseburger®", 1100, 6.00, "Two Charbroiled All-Beef Patties, Two Strips of Bacon, Two Slices of Melted American Cheese, Crispy Onion Rings and Tangy BBQ Sauce on a seeded bun.", "Onion Rings,BBQ Sauce,Cheese");
+        myDB.insertData("Sprite®", 140, 2.00, "Cold Drink", "Small,Medium,Large");
+        myDB.insertData("Strawberry Swirl Cheesecake", 450, 2.99, "Yummy dessert", "No,Desc,Here");
 
         ListView resList = (ListView)findViewById(R.id.resListView);
         ArrayList<String> restaurants = new ArrayList<>();
