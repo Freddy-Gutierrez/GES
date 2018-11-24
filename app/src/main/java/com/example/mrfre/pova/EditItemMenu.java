@@ -49,7 +49,7 @@ public class EditItemMenu extends AppCompatActivity {
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Toast.makeText(EditItemMenu.this, "Item was click", Toast.LENGTH_LONG).show();
+
             }
         });
     }

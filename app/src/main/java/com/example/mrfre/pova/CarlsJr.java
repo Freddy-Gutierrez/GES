@@ -8,7 +8,9 @@ import android.graphics.drawable.Drawable;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ExpandableListAdapter;
 import android.widget.ExpandableListView;
 import android.widget.Toast;
@@ -18,6 +20,8 @@ import java.util.HashMap;
 import java.util.List;
 
 public class CarlsJr extends AppCompatActivity {
+
+    Button checkout;
 
     //data structures and views that will be used to set up UI
     ExpandableListView expandableListView;
@@ -41,10 +45,15 @@ public class CarlsJr extends AppCompatActivity {
     int calories = 0;
     double price = 0.0;
 
+    String saveOrder = "";
+    double totalPrice = 0;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_carls_jr);
+
+        checkout = (Button)findViewById(R.id.checkoutButton);
         
         listDataChild = new HashMap<String, List<String>>();
         //drop down headers
@@ -253,7 +262,6 @@ public class CarlsJr extends AppCompatActivity {
             customs = cursor.getString(5);
         }
         createDialogueBox();
-
     }
 
     private void alertBoxDesserts(int listInd) {
@@ -290,40 +298,123 @@ public class CarlsJr extends AppCompatActivity {
         /*
             Display an alertbox to the user with data query'd from database
          */
-        new AlertDialog.Builder(CarlsJr.this)
-                .setTitle(name)
-                .setMessage("Description: " + description + "\n" +
-                        "\nCalories: " + calories + "\n" +
-                        "\nPrice: " + price + "\n" +
-                        "\nWould you like to add a " + name + " to your cart?")
-                .setIcon(R.drawable.carlslogo)
-                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        Toast.makeText(CarlsJr.this, selection + " added to cart", Toast.LENGTH_LONG).show();
-                    }
-                })
-                .setNeutralButton("Edit", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
+
+        //items that do not have customizations do not have an edit button
+        if (name.equals("Vanilla Hand-Scooped Ice Cream Shake™") ||
+                name.equals("Chocolate Hand-Scooped Ice Cream Shake™") ||
+                name.equals("Strawberry Hand-Scooped Ice Cream Shake™") ||
+                name.equals("Oreo® Cookie Hand-Scooped Ice Cream Shake™") ||
+                name.equals("Crisscut® Fries") ||
+                name.equals("Onion Rings") ||
+                name.equals("Fried Zucchini") ||
+                name.equals("Monster Energy®") ||
+                name.equals("Dasani® Water") ||
+                name.equals("Minute Maid® Orange Juice") ||
+                name.equals("1% Fat Milk") ||
+                name.equals("Chocolate Chip Cookies") ||
+                name.equals("Strawberry Swirl Cheesecake") ||
+                name.equals("Natural-Cut French Fries - Small") ||
+                name.equals("Natural-Cut French Fries - Medium") ||
+                name.equals("Natural-Cut French Fries - Large") ||
+                name.equals("Chocolate Cake")) {
+
+            new AlertDialog.Builder(CarlsJr.this)
+                    .setTitle(name)
+                    .setMessage("Description: " + description + "\n" +
+                            "\nCalories: " + calories + "\n" +
+                            "\nPrice: " + price + "\n" +
+                            "\nWould you like to add a " + name + " to your cart?")
+                    .setIcon(R.drawable.carlslogo)
+                    .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            saveOrder += name + "   " + Double.toString(price) + "\n";
+                            totalPrice += price;
+                            Log.i("Order", saveOrder);
+                            Log.i("Total", Double.toString(totalPrice));
+                            Toast.makeText(CarlsJr.this, selection + " added to cart", Toast.LENGTH_LONG).show();
+                        }
+                    })
+                    .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            Toast.makeText(CarlsJr.this, selection
+                                    + " removed from cart", Toast.LENGTH_LONG).show();
+                        }
+                    }).show();
+        }
+        //if there is an item with customizations the neutral button is set to "Edit"
+        else if(name.equals("Big Carl®") ||
+                name.equals("Double Western Bacon Cheeseburger®")){
+            new AlertDialog.Builder(CarlsJr.this)
+                    .setTitle(name)
+                    .setMessage("Description: " + description + "\n" +
+                            "\nCalories: " + calories + "\n" +
+                            "\nPrice: " + price + "\n" +
+                            "\nWould you like to add a " + name + " to your cart?")
+                    .setIcon(R.drawable.carlslogo)
+                    .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            saveOrder += name + "   " + Double.toString(price) + "\n";
+                            totalPrice += price;
+                            Log.i("Order", saveOrder);
+                            Log.i("Total", Double.toString(totalPrice));
+                            Toast.makeText(CarlsJr.this, selection + " added to cart", Toast.LENGTH_LONG).show();
+                        }
+                    })
+                    .setNeutralButton("Edit", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
                         /*create intent to switch activity to EditItemMenu activity
                         pass item name and customizations to EditItemMenu
                         start EditItemMenu Activity and finish this activity
                         */
-                        Intent intent = new Intent(CarlsJr.this, EditItemMenu.class);
-                        intent.putExtra("itemName", name);
-                        intent.putExtra("customs", customs);
-                        startActivity(intent);
-                        finish();
-                        Toast.makeText(CarlsJr.this, selection + " will be edited", Toast.LENGTH_LONG).show();
-                    }
-                })
-                .setNegativeButton("No", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        Toast.makeText(CarlsJr.this, selection
-                                + " removed from cart", Toast.LENGTH_LONG).show();
-                    }
-                }).show();
+                            Intent intent = new Intent(CarlsJr.this, EditItemMenu.class);
+                            intent.putExtra("itemName", name);
+                            intent.putExtra("customs", customs);
+                            startActivity(intent);
+                            finish();
+                            Toast.makeText(CarlsJr.this, selection + " will be edited", Toast.LENGTH_LONG).show();
+                        }
+                    })
+                    .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            Toast.makeText(CarlsJr.this, selection
+                                    + " removed from cart", Toast.LENGTH_LONG).show();
+                        }
+                    }).show();
+        }
+        //item has various sizes therefore prices vary. Neutral button set you "Sizes/Prices"
+        else {
+            new AlertDialog.Builder(CarlsJr.this)
+                    .setTitle(name)
+                    .setMessage("Select 'Sizes/Prices' to see Size and Price options regarding your item")
+                    .setIcon(R.drawable.carlslogo)
+                    .setNeutralButton("Sizes/Prices", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                        /*create intent to switch activity to EditItemMenu activity
+                        pass item name and customizations to EditItemMenu
+                        start EditItemMenu Activity and finish this activity
+                        */
+                            Intent intent = new Intent(CarlsJr.this, EditItemMenu.class);
+                            intent.putExtra("itemName", name);
+                            intent.putExtra("customs", customs);
+                            startActivity(intent);
+                            finish();
+                            Toast.makeText(CarlsJr.this, selection + " will be edited", Toast.LENGTH_LONG).show();
+                        }
+                    }).show();
+        }
+    }
+
+    public void cartClick(View view) {
+        Intent i = new Intent(CarlsJr.this, Cart.class);
+        i.putExtra("Order", saveOrder);
+        i.putExtra("Total", totalPrice);
+        startActivity(i);
+        finish();
     }
 }
