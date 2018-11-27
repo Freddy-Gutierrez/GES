@@ -63,7 +63,7 @@ public class CarlsJr extends AppCompatActivity {
         burgers.add("Big Carl®");burgers.add("Double Western Bacon Cheeseburger®");
 
         //Fries drop down customizations
-        sideOptions.add("Natural-Cut French Fries - Small");sideOptions.add("Natural-Cut French Fries - Medium");sideOptions.add("Natural-Cut French Fries - Large");sideOptions.add("Crisscut® Fries");sideOptions.add("Onion Rings");sideOptions.add("Fried Zucchhini");
+        sideOptions.add("Natural-Cut French Fries - Small");sideOptions.add("Natural-Cut French Fries - Medium");sideOptions.add("Natural-Cut French Fries - Large");sideOptions.add("Crisscut® Fries");sideOptions.add("Onion Rings");sideOptions.add("Fried Zucchini");
 
         //Drink drop down options
         drinkOptions.add("Fuze® Raspberry Tea");drinkOptions.add("Gold Peak® Iced Tea");drinkOptions.add("Coca-Cola®");drinkOptions.add("Diet Coke®");drinkOptions.add("Coca-Cola Zero™");
@@ -153,7 +153,7 @@ public class CarlsJr extends AppCompatActivity {
                 selection = "Onion Rings";
                 break;
             case 5:
-                selection = "Fried Zucchhini";
+                selection = "Fried Zucchini";
                 break;
             default:
         }
@@ -402,6 +402,7 @@ public class CarlsJr extends AppCompatActivity {
                             Intent intent = new Intent(CarlsJr.this, EditItemMenu.class);
                             intent.putExtra("itemName", name);
                             intent.putExtra("customs", customs);
+                            intent.putExtra("set", false);
                             startActivity(intent);
                             finish();
                             Toast.makeText(CarlsJr.this, selection + " will be edited", Toast.LENGTH_LONG).show();

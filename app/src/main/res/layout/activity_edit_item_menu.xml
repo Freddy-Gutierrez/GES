@@ -6,6 +6,22 @@
     android:layout_height="match_parent"
     tools:context=".EditItemMenu">
 
+    <ListView
+        android:id="@+id/customsListView"
+        android:layout_width="match_parent"
+        android:layout_height="323dp"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/itemImageView">
+
+    </ListView>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/editItemRecyclerListView"
+        android:layout_width="match_parent"
+        android:layout_height="325dp"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/itemImageView"></android.support.v7.widget.RecyclerView>
+
     <ImageView
         android:id="@+id/itemImageView"
         android:layout_width="match_parent"
@@ -16,23 +32,31 @@
         android:scaleType="fitXY"
         android:src="@drawable/bigcarl" />
 
-    <ListView
-        android:id="@+id/customsListView"
-        android:layout_width="match_parent"
-        android:layout_height="323dp"
-        android:layout_alignParentStart="true"
-        android:layout_below="@+id/itemImageView" >
-
-    </ListView>
-
-    <Button
-        android:id="@+id/backButton"
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginBottom="23dp"
-        android:layout_marginStart="37dp"
-        android:onClick="backToMenu"
-        android:text="BACK" />
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="19dp"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/buttonBack"
+            android:layout_width="120dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:onClick="back"
+            android:text="Back"
+            android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/buttonCart"
+            android:layout_width="120dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:onClick="addToCart"
+            android:text="Add To Cart"
+            android:textStyle="bold" />
+    </LinearLayout>
+
 </RelativeLayout>

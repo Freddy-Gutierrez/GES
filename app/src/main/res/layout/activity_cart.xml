@@ -6,22 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".Cart">
 
-    <TextView
-        android:id="@+id/displayOrder"
-        android:layout_width="364dp"
-        android:layout_height="449dp"
-        android:layout_centerInParent="true"
-        android:text="TextView"
-        android:textColor="@android:color/black" />
-
-    <TextView
-        android:id="@+id/yourOrderTV"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_alignStart="@+id/displayOrder"
-        android:layout_marginTop="52dp"
-        android:text="YOUR ORDER" />
 
     <Button
         android:id="@+id/checkoutButton"
@@ -33,5 +17,15 @@
         android:layout_marginEnd="52dp"
         android:onClick="checkoutOnClick"
         android:text="CHECKOUT" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recyclerListView"
+        android:layout_width="match_parent"
+        android:layout_height="491dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="0dp"></android.support.v7.widget.RecyclerView>
+
+
 
 </RelativeLayout>

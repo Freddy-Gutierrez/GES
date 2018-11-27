@@ -5,13 +5,17 @@ import android.graphics.Bitmap;
 import android.media.Image;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Switch;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -22,7 +26,11 @@ public class EditItemMenu extends AppCompatActivity {
     ImageView item;
     String itemName = "";
     String customs = "";
+    public static Boolean setSwitch = true;
+    String order = "";
+    RecyclerViewAdapter2 adapter;
     String[] customsArray;
+    ArrayList<String> toArrayList;
     ListView lv;
 
     @Override
@@ -30,30 +38,35 @@ public class EditItemMenu extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_item_menu);
 
-
         lv = (ListView)findViewById(R.id.customsListView);
-        item = (ImageView)findViewById(R.id.itemImageView);
+        item = (ImageView)findViewById(R.id.itemImageView);;
+
         Intent i = getIntent();
         itemName = i.getStringExtra("itemName");
-//get string of toppings/customs then split using ',' as delimiter
+        setSwitch = i.getBooleanExtra("set", true);
+        Log.i("isDrink", "" + setSwitch);
+        //get string of toppings/customs then split using ',' as delimiter
         customs = i.getStringExtra("customs");
         customsArray = customs.split(",");
-        setListView();
+        toArrayList = new ArrayList<>(Arrays.asList(customsArray));
+
+        setTitle(itemName);
         setImage();
+        initRecyclerView();
+
     }
 
-    //set listview contents that display the toppings/customizations of an item
-    private void setListView() {
-        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1, customsArray);
-        lv.setAdapter(arrayAdapter);
-        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
 
-            }
-        });
+    //pass parameters to RecyclerView2 to inflate recycler view
+    private void initRecyclerView() {
+        RecyclerView recyclerView = findViewById(R.id.editItemRecyclerListView);
+        adapter = new RecyclerViewAdapter2(this,toArrayList);
+        recyclerView.setAdapter(adapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
     }
 
+
+    //set images based on item name
     private void setImage() {
         switch (itemName){
             case "Big Carl®":
@@ -74,7 +87,7 @@ public class EditItemMenu extends AppCompatActivity {
             case "Crisscut® Fries":
                 item.setImageDrawable(getResources().getDrawable(R.drawable.crisscutfries));
                 break;
-            case "Fried Zucchhini":
+            case "Fried Zucchini":
                 item.setImageDrawable(getResources().getDrawable(R.drawable.friedzucchini));
                 break;
             case "Fuze® Raspberry Tea":
@@ -169,10 +182,28 @@ public class EditItemMenu extends AppCompatActivity {
         }
     }
 
-    public void backToMenu(View view) {
+
+    //return to carls jr menu
+    public void back(View view) {
         Intent i = new Intent(EditItemMenu.this, CarlsJr.class);
         startActivity(i);
         finish();
+    }
+
+    public void addToCart(View view) {
+        RecyclerView recyclerView = findViewById(R.id.editItemRecyclerListView);
+        boolean checked;
+        String ingredient;
+        order = itemName;
+        //iterate through each position of the recyclerview checking to see if a switch is true for a topping. If so topping is kept on item, else it is removed
+        for(int i =0; i < adapter.getItemCount(); i++){
+            checked = ((Switch) recyclerView.findViewHolderForAdapterPosition(i).itemView.findViewById(R.id.itemSwitch)).isChecked();
+            ingredient = ((TextView) recyclerView.findViewHolderForAdapterPosition(i).itemView.findViewById(R.id.topping)).getText().toString();
+            if(checked){
+                order += "," + ingredient;
+                Log.i("Item", order);
+            }
+        }
     }
 }
 
