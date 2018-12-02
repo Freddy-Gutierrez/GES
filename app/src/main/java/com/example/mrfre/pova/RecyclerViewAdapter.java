@@ -55,7 +55,6 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         TextView itemName;
         TextView quantity;
         TextView price;
-        Switch aSwitch;
         RelativeLayout parentLayout;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -63,19 +62,6 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             quantity = (TextView) itemView.findViewById(R.id.quantity);
             price = (TextView) itemView.findViewById(R.id.price);
             parentLayout = (RelativeLayout) itemView.findViewById(R.id.parent_layout);
-            aSwitch = itemView.findViewById(R.id.switch1);
-            aSwitch.setChecked(true);
-            aSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-                @Override
-                public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                    if(b){
-                        Toast.makeText(context, "topping removed", Toast.LENGTH_SHORT).show();
-                    }
-                    else {
-                        Toast.makeText(context, "topping added", Toast.LENGTH_SHORT).show();
-                    }
-                }
-            });
         }
     }
 }

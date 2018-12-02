@@ -69,20 +69,4 @@
         android:layout_height="wrap_content"
         android:text=""/>
 
-    <Button
-        android:id="@+id/testButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:onClick="test"
-        android:text="Press Me" />
-
-    <Switch
-        android:id="@+id/switch1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/itemName"
-        android:layout_alignParentStart="true"
-        android:layout_marginStart="156dp"
-        android:text="Switch" />
-
 </RelativeLayout>

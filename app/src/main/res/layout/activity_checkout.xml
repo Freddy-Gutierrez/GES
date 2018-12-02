@@ -7,7 +7,7 @@
     tools:context=".Checkout">
 
     <EditText
-        android:id="@+id/editTextCardInfo"
+        android:id="@+id/editTextCardNum"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
@@ -25,19 +25,41 @@
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_alignParentTop="true"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
         android:layout_marginTop="199dp"
         android:orientation="horizontal">
 
         <EditText
-            android:id="@+id/editTextExpDate"
+            android:id="@+id/editTextMonth"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
             android:layout_weight="1"
             android:ems="10"
-            android:hint="Expiration Date (MM/YYYY)"
-            android:inputType="textPersonName" />
+            android:hint="Month (mm)"
+            android:inputType="textPersonName"
+            android:maxLength="2" />
+
+        <TextView
+            android:id="@+id/textViewSlash"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:paddingLeft="0dp"
+            android:text="/"
+            android:textColor="@android:color/black"
+            android:textSize="24sp"
+            android:textStyle="bold" />
+
+        <EditText
+            android:id="@+id/editTextYear"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:ems="10"
+            android:hint="Year (yyyy)"
+            android:inputType="textPersonName"
+            android:maxLength="4" />
 
         <EditText
             android:id="@+id/editTextCSC"
@@ -55,8 +77,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        android:layout_alignStart="@+id/editTextCardInfo"
-        android:layout_marginTop="40dp"
+        android:layout_alignStart="@+id/editTextCardNum"
+        android:layout_marginTop="30dp"
         android:text="CARD DETAILS"
         android:textColor="@android:color/holo_blue_dark"
         android:textSize="18sp"
@@ -67,7 +89,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        android:layout_alignStart="@+id/editTextCardInfo"
+        android:layout_alignStart="@+id/editTextCardNum"
         android:layout_marginTop="265dp"
         android:text="BILLING ADDRESS"
         android:textColor="@android:color/holo_blue_dark"
@@ -119,7 +141,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_alignStart="@+id/editTextCardInfo"
+        android:layout_alignStart="@+id/editTextCardNum"
         android:layout_marginBottom="219dp"
         android:ems="10"
         android:hint="Street Address"
@@ -151,7 +173,8 @@
             android:layout_weight="1"
             android:ems="10"
             android:hint="State/Province"
-            android:inputType="textPersonName" />
+            android:inputType="textPersonName"
+            android:maxLength="2" />
 
         <EditText
             android:id="@+id/editTextPostal"
@@ -160,7 +183,8 @@
             android:layout_weight="1"
             android:ems="10"
             android:hint="Postal Code"
-            android:inputType="textPersonName" />
+            android:inputType="textPersonName"
+            android:maxLength="5" />
     </LinearLayout>
 
     <EditText
@@ -168,18 +192,18 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_alignStart="@+id/editTextCardInfo"
+        android:layout_alignStart="@+id/editTextCardNum"
         android:layout_marginBottom="101dp"
         android:ems="10"
         android:hint="Country"
         android:inputType="textPersonName" />
 
     <EditText
-        android:id="@+id/editTextName"
+        android:id="@+id/editTextCardHolderName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        android:layout_alignStart="@+id/editTextCardInfo"
+        android:layout_alignStart="@+id/editTextCardNum"
         android:layout_marginTop="76dp"
         android:ems="10"
         android:hint="Card Holder Name"
@@ -193,6 +217,7 @@
         android:layout_alignParentEnd="true"
         android:layout_marginBottom="22dp"
         android:layout_marginEnd="37dp"
+        android:onClick="confirmClick"
         android:text="Confirm Payment" />
 
     <Button
