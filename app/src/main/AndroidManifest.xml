@@ -24,7 +24,8 @@
         <activity android:name=".EditItemMenu" />
         <activity android:name=".Cart" />
         <activity android:name=".RecAdapter" />
-        <activity android:name=".Checkout"></activity>
+        <activity android:name=".Checkout" />
+        <activity android:name=".ConfirmationScreen"></activity>
     </application>
 
 </manifest>

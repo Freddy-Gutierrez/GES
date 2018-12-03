@@ -19,6 +19,7 @@ public class Cart extends AppCompatActivity {
     private ArrayList<String> itemNames = new ArrayList<>();
     private ArrayList<Double> prices = new ArrayList<>();
     private ArrayList<Integer> quantity = new ArrayList<>();
+    private ArrayList<String>toppings = new ArrayList<>();
     TextView display;
 
     @Override
@@ -28,9 +29,13 @@ public class Cart extends AppCompatActivity {
         setTitle("CART");
 
 
-        itemNames.add("BurgerOne");itemNames.add("burgerTwo");itemNames.add("Burger3");itemNames.add("burger4");
+        itemNames.add("Double Western Bacon Cheeseburger®");itemNames.add("burgerTwo");itemNames.add("Burger3");itemNames.add("burger4");
         itemNames.add("Burger5");itemNames.add("burger6");itemNames.add("Burger7");itemNames.add("burger8");
         itemNames.add("Burger9");itemNames.add("burger10");itemNames.add("Burger11");itemNames.add("burger12");
+
+        toppings.add("Cheese,BBQ");toppings.add("");toppings.add("Large");toppings.add("Small");
+        toppings.add("BBQ,Cheese,Onion Rings");toppings.add("");toppings.add("");toppings.add("");toppings.add("");
+        toppings.add("");toppings.add("");toppings.add("");toppings.add("");toppings.add("");
 
         prices.add(2.56);prices.add(6.45);prices.add(2.34);prices.add(9.78);
         prices.add(10.23);prices.add(11.00);prices.add(12.34);prices.add(19.56);
@@ -46,7 +51,7 @@ public class Cart extends AppCompatActivity {
 
     private void initRecyclerView(){
         RecyclerView recyclerView = findViewById(R.id.recyclerListView);
-        RecyclerViewAdapter adapter = new RecyclerViewAdapter(this,itemNames,quantity,prices);
+        RecyclerViewAdapter adapter = new RecyclerViewAdapter(this,itemNames,toppings,quantity,prices);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
     }

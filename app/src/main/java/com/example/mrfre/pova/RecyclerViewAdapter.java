@@ -1,6 +1,8 @@
 package com.example.mrfre.pova;
 
 import android.content.Context;
+import android.content.Intent;
+import android.database.Cursor;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -18,15 +20,19 @@ import java.util.ArrayList;
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder>{
 
     private ArrayList<String> itemNames = new ArrayList<>();
+    private ArrayList<String> toppings = new ArrayList<>();
     private ArrayList<Integer> itemQuantities = new ArrayList<>();
     private ArrayList<Double> prices = new ArrayList<>();
     private Context context;
+    DataBaseHelper myDB;
 
-    public RecyclerViewAdapter(Context context,ArrayList<String> itemNames, ArrayList<Integer> itemQuantities, ArrayList<Double> prices) {
+    public RecyclerViewAdapter(Context context,ArrayList<String> itemNames, ArrayList<String> toppings, ArrayList<Integer> itemQuantities, ArrayList<Double> prices) {
         this.itemNames = itemNames;
+        this.toppings = toppings;
         this.itemQuantities = itemQuantities;
         this.prices = prices;
         this.context = context;
+        myDB = new DataBaseHelper(context);
     }
 
     @NonNull
@@ -38,10 +44,29 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
+    public void onBindViewHolder(@NonNull ViewHolder viewHolder, final int i) {
         viewHolder.itemName.setText(itemNames.get(i));
+        viewHolder.ingredients.setText(toppings.get(i));
         viewHolder.price.setText("$" + Double.toString(prices.get(i)));
         viewHolder.quantity.setText(Integer.toString(itemQuantities.get(i)));
+        viewHolder.parentLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                setupEditItem(itemNames.get(i));
+            }
+        });
+    }
+
+    private void setupEditItem(String name) {
+        Cursor cursor = myDB.getData(name);
+        String customs = "";
+        while(cursor.moveToNext()){
+            customs = cursor.getString(5);
+        }
+        Intent i = new Intent(context, EditItemMenu.class);
+        i.putExtra("itemName", name);
+        i.putExtra("customs", customs);
+        context.startActivity(i);
     }
 
     @Override
@@ -55,10 +80,12 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         TextView itemName;
         TextView quantity;
         TextView price;
+        TextView ingredients;
         RelativeLayout parentLayout;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             itemName = (TextView) itemView.findViewById(R.id.itemName);
+            ingredients = (TextView) itemView.findViewById(R.id.textViewToppings);
             quantity = (TextView) itemView.findViewById(R.id.quantity);
             price = (TextView) itemView.findViewById(R.id.price);
             parentLayout = (RelativeLayout) itemView.findViewById(R.id.parent_layout);

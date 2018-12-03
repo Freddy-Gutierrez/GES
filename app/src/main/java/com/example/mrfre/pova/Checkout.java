@@ -1,17 +1,26 @@
 package com.example.mrfre.pova;
 
 import android.arch.core.internal.FastSafeIterableMap;
+import android.content.Context;
+import android.content.Intent;
+import android.hardware.input.InputManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.RelativeLayout;
+import android.widget.Spinner;
 import android.widget.Toast;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 
-public class Checkout extends AppCompatActivity {
+public class Checkout extends AppCompatActivity implements View.OnClickListener {
 
+    RelativeLayout backgroudRL;
     EditText firstNameET;
     EditText lastNameET;
     EditText cardNumET;
@@ -40,12 +49,15 @@ public class Checkout extends AppCompatActivity {
     String postal;
     String country;
 
+    Spinner spin;
+    ArrayList <String> times = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_checkout);
 
+        backgroudRL = (RelativeLayout) findViewById(R.id.background);
         firstNameET = (EditText)findViewById(R.id.editTextFirstName);
         lastNameET = (EditText)findViewById(R.id.editTextLastName);
         cardNumET = (EditText)findViewById(R.id.editTextCardNum);
@@ -60,24 +72,36 @@ public class Checkout extends AppCompatActivity {
         postalET = (EditText)findViewById(R.id.editTextPostal);
         countryET = (EditText)findViewById(R.id.editTextCountry);
 
+        spin = (Spinner) findViewById(R.id.spinner);
+        times.add("15 minutes");times.add("30 minutes");
+        ArrayAdapter <String> arrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, times);
+        spin.setAdapter(arrayAdapter);
+        backgroudRL.setOnClickListener(this);
 
     }
 
     //get user information
-    private void getInfo(){
-        firstName =  firstNameET.getText().toString();
-        lastName =  lastNameET.getText().toString();
-        cardNum =  cardNumET.getText().toString();
-        month =  Integer.parseInt(monthET.getText().toString());
-        year = Integer.parseInt(yearET.getText().toString());
-        csc =  cscET.getText().toString();
-        cardHolderName =  cardHolderNameET.getText().toString();
-        middleI =  middleIET.getText().toString();
-        street =  streetET.getText().toString();
-        city =  cityET.getText().toString();
-        state =  stateET.getText().toString();
-        postal =  postalET.getText().toString();
-        country =  countryET.getText().toString();
+    private boolean getInfo(){
+        boolean isValid = true;
+        try {
+            firstName =  firstNameET.getText().toString();
+            lastName =  lastNameET.getText().toString();
+            cardNum =  cardNumET.getText().toString();
+            month =  Integer.parseInt(monthET.getText().toString());
+            year = Integer.parseInt(yearET.getText().toString());
+            csc =  cscET.getText().toString();
+            cardHolderName =  cardHolderNameET.getText().toString();
+            middleI =  middleIET.getText().toString();
+            street =  streetET.getText().toString();
+            city =  cityET.getText().toString();
+            state =  stateET.getText().toString();
+            postal =  postalET.getText().toString();
+            country =  countryET.getText().toString();
+        }
+        catch (Exception x){
+            isValid = false;
+        }
+        return isValid;
     }
 
     private boolean verifyCardNum(){
@@ -164,14 +188,24 @@ public class Checkout extends AppCompatActivity {
     }
 
     public void confirmClick(View view) {
-        getInfo();
         //all should be true for a valid card
-        boolean isValid = verifyExpirationDate() && verifyCardNum() && verifyCSC() && verifyPostalCode() && verifyState();
+        boolean isValid = getInfo() && verifyExpirationDate() && verifyCardNum() && verifyCSC() && verifyPostalCode() && verifyState();
         if(isValid){
-            Toast.makeText(this, "New Activity Started", Toast.LENGTH_SHORT).show();
+            Intent i = new Intent(this, ConfirmationScreen.class);
+            i.putExtra("firstN", firstName);
+            i.putExtra("lastN", lastName);
+            //i.putExtra("total", total);       pass in total
+
+
         }
         else{
-            Toast.makeText(this, "Invalid Card Information Entered", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Problem Verifying Card", Toast.LENGTH_SHORT).show();
         }
+    }
+
+    @Override
+    public void onClick(View view) {
+        InputMethodManager mgr = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        mgr.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(),0);
     }
 }

@@ -13,14 +13,17 @@
         android:text="Item Name"
         android:textStyle="bold"
         android:textColor="@android:color/black" />
+
     <TextView
         android:id="@+id/itemName"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
-        android:layout_marginLeft="40dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/itemNameHeader"
+        android:layout_centerVertical="true"
         android:gravity="center_vertical|center"
+        android:maxLength="14"
         android:text="this is a text"
-        android:textColor="@android:color/black"/>
+        android:textColor="@android:color/black" />
 
     <TextView
         android:id="@+id/itemPriceHeader"
@@ -68,5 +71,14 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text=""/>
+
+    <TextView
+        android:id="@+id/textViewToppings"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/itemNameHeader"
+        android:layout_below="@+id/itemName"
+        android:layout_marginTop="30dp"
+        android:textColor="@android:color/black" />
 
 </RelativeLayout>
