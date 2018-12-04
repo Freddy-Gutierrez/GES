@@ -9,12 +9,14 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 
@@ -50,7 +52,12 @@ public class Checkout extends AppCompatActivity implements View.OnClickListener 
     String country;
 
     Spinner spin;
+    int time1 = 15;
+    int time2 = 30;
+    int time3 = 45;
+    int timeSelected = 0;
     ArrayList <String> times = new ArrayList<>();
+    ArrayAdapter <String> arrayAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,9 +80,33 @@ public class Checkout extends AppCompatActivity implements View.OnClickListener 
         countryET = (EditText)findViewById(R.id.editTextCountry);
 
         spin = (Spinner) findViewById(R.id.spinner);
-        times.add("15 minutes");times.add("30 minutes");
-        ArrayAdapter <String> arrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, times);
+        times.add(time1 + " minutes");times.add(time2 + " minutes");times.add(time3 + " minutes");
+        arrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, times);
         spin.setAdapter(arrayAdapter);
+        spin.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                switch (i){
+                    case 0:
+                        timeSelected = time1;
+                        break;
+                    case 1:
+                        timeSelected = time2;
+                        break;
+                    case 2:
+                        timeSelected = time3;
+                        break;
+                    default:
+                        break;
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+                timeSelected = time1;
+            }
+        });
+
         backgroudRL.setOnClickListener(this);
 
     }
@@ -190,19 +221,45 @@ public class Checkout extends AppCompatActivity implements View.OnClickListener 
     public void confirmClick(View view) {
         //all should be true for a valid card
         boolean isValid = getInfo() && verifyExpirationDate() && verifyCardNum() && verifyCSC() && verifyPostalCode() && verifyState();
-        if(isValid){
-            Intent i = new Intent(this, ConfirmationScreen.class);
-            i.putExtra("firstN", firstName);
-            i.putExtra("lastN", lastName);
-            //i.putExtra("total", total);       pass in total
-
-
-        }
-        else{
-            Toast.makeText(this, "Problem Verifying Card", Toast.LENGTH_SHORT).show();
-        }
+        Intent i = new Intent(this, ConfirmationScreen.class);
+        i.putExtra("firstN", firstName);
+        i.putExtra("lastN", lastName);
+        startActivity(i);
+        finish();
+//        if(isValid){
+//
+//            Intent i = new Intent(this, ConfirmationScreen.class);
+//            i.putExtra("firstN", firstName);
+//            i.putExtra("lastN", lastName);
+//            startActivity(i);
+//            finish();
+//            //i.putExtra("total", total);       pass in total
+//
+//
+//        }
+//        else{
+//            setPickUpTime();
+//            Toast.makeText(this, "Problem Verifying Card", Toast.LENGTH_SHORT).show();
+//        }
     }
 
+    private void setPickUpTime(){
+        Calendar cal = Calendar.getInstance();
+        int h = cal.get(Calendar.HOUR);
+        int m = cal.get(Calendar.MINUTE);
+        String time = "";
+        //if current minutes + selected minutes is over 60 then a new hour needs to be added  to current hour. Also need to calculate appropriate minutes
+        if((m + timeSelected) > 60){
+            h += 1;
+            m = (m+timeSelected) - 60;
+        }
+        else{
+            m += timeSelected;
+        }
+        time = h + ":" + m;
+        //PASS TIME INTO CONFIRMATION SCREEN ALONG WITH REST OF VARIABLES THAT WILL BE DISPLAYED
+        Log.e("TEST", time);
+    }
     @Override
     public void onClick(View view) {
         InputMethodManager mgr = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);

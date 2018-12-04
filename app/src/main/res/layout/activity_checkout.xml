@@ -86,7 +86,7 @@
         android:textStyle="bold" />
 
     <TextView
-        android:id="@+id/textViewBilling"
+        android:id="@+id/textViewBillingHeader"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
