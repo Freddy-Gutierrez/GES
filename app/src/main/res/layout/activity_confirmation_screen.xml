@@ -20,8 +20,8 @@
 
     <TextView
         android:id="@+id/textViewDetailsHeader"
-        android:layout_width="match_parent"
-        android:layout_height="45dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:layout_marginLeft="10dp"
@@ -29,18 +29,18 @@
         android:outlineAmbientShadowColor="@color/colorAccent"
         android:text="Order Details:"
         android:textColor="@color/common_google_signin_btn_text_dark_focused"
-        android:textSize="18sp"
+        android:textSize="24sp"
         android:textStyle="bold" />
 
     <TextView
         android:id="@+id/textViewDetails"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/textViewDetailsHeader"
-        android:layout_alignParentStart="true"
-        android:layout_marginLeft="10dp"
+        android:layout_alignStart="@+id/textViewDetailsHeader"
+        android:layout_below="@+id/textViewDetailsHeader"
         android:text="TextView"
-        android:textColor="@android:color/black" />
+        android:textColor="@android:color/black"
+        android:textSize="18sp" />
 
     <TextView
         android:id="@+id/textViewBillingHeader"
@@ -52,7 +52,7 @@
         android:layout_marginLeft="10dp"
         android:text="Billing Information"
         android:textColor="@android:color/black"
-        android:textSize="18sp"
+        android:textSize="24sp"
         android:textStyle="bold" />
 
     <TextView
@@ -64,7 +64,9 @@
         android:layout_marginLeft="10dp"
         android:layout_marginTop="-244dp"
         android:text="TextView"
-        android:textColor="@android:color/black" />
+        android:textColor="@android:color/black"
+        android:textSize="18sp"
+        android:textStyle="bold" />
 
     <TextView
         android:id="@+id/textViewOrderTotal"
@@ -75,7 +77,7 @@
         android:layout_marginBottom="75dp"
         android:text="Order Total: "
         android:textColor="@android:color/black"
-        android:textSize="18sp"
+        android:textSize="24sp"
         android:textStyle="bold" />
 
     <TextView

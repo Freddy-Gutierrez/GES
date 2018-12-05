@@ -50,6 +50,8 @@ public class Checkout extends AppCompatActivity implements View.OnClickListener 
     String state;
     String postal;
     String country;
+    String lastFour;
+    String time = "";
 
     Spinner spin;
     int time1 = 15;
@@ -132,6 +134,7 @@ public class Checkout extends AppCompatActivity implements View.OnClickListener 
         catch (Exception x){
             isValid = false;
         }
+        lastFour = "" + cardNum.charAt(12) + cardNum.charAt(13) + cardNum.charAt(14) + cardNum.charAt(15);
         return isValid;
     }
 
@@ -221,33 +224,30 @@ public class Checkout extends AppCompatActivity implements View.OnClickListener 
     public void confirmClick(View view) {
         //all should be true for a valid card
         boolean isValid = getInfo() && verifyExpirationDate() && verifyCardNum() && verifyCSC() && verifyPostalCode() && verifyState();
-        Intent i = new Intent(this, ConfirmationScreen.class);
-        i.putExtra("firstN", firstName);
-        i.putExtra("lastN", lastName);
-        startActivity(i);
-        finish();
-//        if(isValid){
-//
-//            Intent i = new Intent(this, ConfirmationScreen.class);
-//            i.putExtra("firstN", firstName);
-//            i.putExtra("lastN", lastName);
-//            startActivity(i);
-//            finish();
-//            //i.putExtra("total", total);       pass in total
-//
-//
-//        }
-//        else{
-//            setPickUpTime();
-//            Toast.makeText(this, "Problem Verifying Card", Toast.LENGTH_SHORT).show();
-//        }
+        if(isValid){
+            setPickUpTime();
+            Intent i = new Intent(this, ConfirmationScreen.class);
+            i.putExtra("firstN", firstName);
+            i.putExtra("middle",middleI);
+            i.putExtra("lastN", lastName);
+            i.putExtra("street",street);
+            i.putExtra("city",city);
+            i.putExtra("postal",postal);
+            i.putExtra("country",country);
+            i.putExtra("lastFour",lastFour);
+            i.putExtra("pickUp",time);
+            startActivity(i);
+            finish();
+        }
+        else{
+            Toast.makeText(this, "Problem Verifying Card", Toast.LENGTH_SHORT).show();
+        }
     }
 
     private void setPickUpTime(){
         Calendar cal = Calendar.getInstance();
         int h = cal.get(Calendar.HOUR);
         int m = cal.get(Calendar.MINUTE);
-        String time = "";
         //if current minutes + selected minutes is over 60 then a new hour needs to be added  to current hour. Also need to calculate appropriate minutes
         if((m + timeSelected) > 60){
             h += 1;

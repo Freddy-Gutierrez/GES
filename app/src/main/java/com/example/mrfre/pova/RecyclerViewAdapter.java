@@ -19,10 +19,10 @@ import java.util.ArrayList;
 
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder>{
 
-    private ArrayList<String> itemNames = new ArrayList<>();
-    private ArrayList<String> toppings = new ArrayList<>();
-    private ArrayList<Integer> itemQuantities = new ArrayList<>();
-    private ArrayList<Double> prices = new ArrayList<>();
+    public static ArrayList<String> itemNames = new ArrayList<>();
+    public static ArrayList<String> toppings = new ArrayList<>();
+    public static ArrayList<Integer> itemQuantities = new ArrayList<>();
+    public static ArrayList<Double> prices = new ArrayList<>();
     private Context context;
     DataBaseHelper myDB;
 

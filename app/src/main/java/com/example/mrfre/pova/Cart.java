@@ -16,12 +16,11 @@ public class Cart extends AppCompatActivity {
 
 
     //vars
-    public static ArrayList<String> itemNames = new ArrayList<>();
-    public static ArrayList<Double> prices = new ArrayList<>();
-    public static ArrayList<Integer> quantity = new ArrayList<>();
-    public static ArrayList<String>toppings = new ArrayList<>();
+    ArrayList<String> itemNames = new ArrayList<>();
+    ArrayList<Double> prices = new ArrayList<>();
+    ArrayList<Integer> quantity = new ArrayList<>();
+    ArrayList<String>toppings = new ArrayList<>();
     public static double total = 0.0;
-    TextView display;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

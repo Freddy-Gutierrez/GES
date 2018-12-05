@@ -3,6 +3,7 @@ package com.example.mrfre.pova;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.media.Image;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -204,6 +205,7 @@ public class EditItemMenu extends AppCompatActivity {
                 Log.i("Item", order);
             }
         }
+        //have pop up box to as use if they want to kee shopping or checkout
     }
 }
 
