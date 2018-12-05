@@ -18,10 +18,10 @@ public class Server extends Application {
 
         Parse.enableLocalDatastore(this);
         Parse.initialize(new Parse.Configuration.Builder(this)
-                .applicationId("ac9e03c76cbc07ab29129ca68ed330830148f244")
+                .applicationId("b083aef21605d9155a7486bccfe22ffb99a2802c")
                 // if desired
-                .clientKey("41d70b40e22a0d49437d54d5a3abef256fff3308")
-                .server("http://54.215.247.131:80/parse/")
+                .clientKey("02be838f9b38ea90c235a1c1f986af6fb9bef0b9")
+                .server("http://18.144.45.55:80/parse/")
                 .build()
         );
     }

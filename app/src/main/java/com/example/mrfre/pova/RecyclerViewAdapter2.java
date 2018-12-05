@@ -48,22 +48,17 @@ public class RecyclerViewAdapter2 extends RecyclerView.Adapter<RecyclerViewAdapt
         TextView topping;
         Switch aSwitch;
         RelativeLayout parentLayout;
-        Boolean isDrink;
         String toastText;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            isDrink = EditItemMenu.setSwitch;
-            Log.i("isDrink", "" + isDrink);
             topping = (TextView) itemView.findViewById(R.id.topping);
             aSwitch = (Switch)itemView.findViewById(R.id.itemSwitch);
             parentLayout = (RelativeLayout) itemView.findViewById(R.id.editItemParent);
-
-
             /*check to see if item being edited is a drink
             if so make all switches false (don't want all drinks added to cart by default, up to user to decide which drink to add)
             else make all switches true (all ingredients come in item by default therefore switches are all on)
              */
-            if(!isDrink){
+            if(CarlsJr.isDrink){
                 aSwitch.setChecked(false);
                 toastText = "Drink ";
             }
@@ -75,6 +70,7 @@ public class RecyclerViewAdapter2 extends RecyclerView.Adapter<RecyclerViewAdapt
                 @Override
                 public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                     if(b){
+
                         Toast.makeText(context, toastText + "Added", Toast.LENGTH_SHORT).show();
                     }
                     else {

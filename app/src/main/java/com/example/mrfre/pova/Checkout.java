@@ -130,11 +130,11 @@ public class Checkout extends AppCompatActivity implements View.OnClickListener 
             state =  stateET.getText().toString();
             postal =  postalET.getText().toString();
             country =  countryET.getText().toString();
+            lastFour = "" + cardNum.charAt(12) + cardNum.charAt(13) + cardNum.charAt(14) + cardNum.charAt(15);
         }
         catch (Exception x){
             isValid = false;
         }
-        lastFour = "" + cardNum.charAt(12) + cardNum.charAt(13) + cardNum.charAt(14) + cardNum.charAt(15);
         return isValid;
     }
 
@@ -251,6 +251,9 @@ public class Checkout extends AppCompatActivity implements View.OnClickListener 
         //if current minutes + selected minutes is over 60 then a new hour needs to be added  to current hour. Also need to calculate appropriate minutes
         if((m + timeSelected) > 60){
             h += 1;
+            if(h > 12){
+                h = h % 12;
+            }
             m = (m+timeSelected) - 60;
         }
         else{

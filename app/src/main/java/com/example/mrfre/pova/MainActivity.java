@@ -181,4 +181,10 @@ public class MainActivity extends AppCompatActivity {
                 "A Handmade American Classic of our vanilla milkshake with a taste of Jolly Rancher candy mixed right in.",
                 "Small (1.29),Medium (1.59),Large (1.79)");
     }
+
+    public void switchToRes(View view) {
+        Intent i = new Intent(this, RestaurantView.class);
+        startActivity(i);
+        finish();
+    }
 }

@@ -13,6 +13,7 @@ public class ConfirmationScreen extends AppCompatActivity {
 
     String textDetails = "";
     String billingText = "";
+    String pickUpTime = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,7 +39,7 @@ public class ConfirmationScreen extends AppCompatActivity {
         String postal = intent.getStringExtra("postal");
         String country = intent.getStringExtra("country");
         String lastFour = intent.getStringExtra("lastFour");
-        String pickUpTime = intent.getStringExtra("pickUp");
+        pickUpTime = "\nPick Up Time: " + intent.getStringExtra("pickUp");
         billingText = firstName + " " + middle + " " + lastName + "\n"
                       + street + ", " + city + " " + postal + "\n"
                       + country + "\n"
@@ -48,11 +49,10 @@ public class ConfirmationScreen extends AppCompatActivity {
         for(int  i =0; i< RecyclerViewAdapter.itemNames.size(); i++){
             textDetails = textDetails + RecyclerViewAdapter.itemQuantities.get(i) + " " + RecyclerViewAdapter.itemNames.get(i) + " " + RecyclerViewAdapter.toppings.get(i) + "\n";
         }
-        textDetails += "\nPick Up Time: " + pickUpTime;
     }
 
     private void setTexts() {
-        orderDetails.setText(textDetails);
+        orderDetails.setText(textDetails + pickUpTime);
         billingInfo.setText(billingText);
         total.setText("Order Total: $" + Cart.total);
     }

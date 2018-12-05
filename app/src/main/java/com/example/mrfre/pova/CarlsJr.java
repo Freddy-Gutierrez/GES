@@ -44,6 +44,7 @@ public class CarlsJr extends AppCompatActivity {
     String customs = "";
     int calories = 0;
     double price = 0.0;
+    public static boolean isDrink = false;
 
     String saveOrder = "";
     double totalPrice = 0;
@@ -317,7 +318,7 @@ public class CarlsJr extends AppCompatActivity {
                 name.equals("Natural-Cut French Fries - Medium") ||
                 name.equals("Natural-Cut French Fries - Large") ||
                 name.equals("Chocolate Cake")) {
-
+            isDrink = false;
             new AlertDialog.Builder(CarlsJr.this)
                     .setTitle(name)
                     .setMessage("Description: " + description + "\n" +
@@ -338,14 +339,14 @@ public class CarlsJr extends AppCompatActivity {
                     .setNegativeButton("No", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
-                            Toast.makeText(CarlsJr.this, selection
-                                    + " removed from cart", Toast.LENGTH_LONG).show();
+                            //do nothing
                         }
                     }).show();
         }
         //if there is an item with customizations the neutral button is set to "Edit"
         else if(name.equals("Big Carl®") ||
                 name.equals("Double Western Bacon Cheeseburger®")){
+            isDrink = false;
             new AlertDialog.Builder(CarlsJr.this)
                     .setTitle(name)
                     .setMessage("Description: " + description + "\n" +
@@ -375,19 +376,18 @@ public class CarlsJr extends AppCompatActivity {
                             intent.putExtra("customs", customs);
                             startActivity(intent);
                             finish();
-                            Toast.makeText(CarlsJr.this, selection + " will be edited", Toast.LENGTH_LONG).show();
                         }
                     })
                     .setNegativeButton("No", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
-                            Toast.makeText(CarlsJr.this, selection
-                                    + " removed from cart", Toast.LENGTH_LONG).show();
+                            //do nothing
                         }
                     }).show();
         }
         //item has various sizes therefore prices vary. Neutral button set you "Sizes/Prices"
         else {
+            isDrink = true;
             new AlertDialog.Builder(CarlsJr.this)
                     .setTitle(name)
                     .setMessage("Select 'Sizes/Prices' to see Size and Price options regarding your item")
@@ -402,10 +402,8 @@ public class CarlsJr extends AppCompatActivity {
                             Intent intent = new Intent(CarlsJr.this, EditItemMenu.class);
                             intent.putExtra("itemName", name);
                             intent.putExtra("customs", customs);
-                            intent.putExtra("set", false);
                             startActivity(intent);
                             finish();
-                            Toast.makeText(CarlsJr.this, selection + " will be edited", Toast.LENGTH_LONG).show();
                         }
                     }).show();
         }

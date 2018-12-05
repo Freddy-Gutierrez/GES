@@ -27,12 +27,13 @@ public class EditItemMenu extends AppCompatActivity {
     ImageView item;
     String itemName = "";
     String customs = "";
-    public static Boolean setSwitch = true;
     String order = "";
     RecyclerViewAdapter2 adapter;
     String[] customsArray;
     ArrayList<String> toArrayList;
     ListView lv;
+
+    public static double drinkPrice = 0.0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,8 +45,6 @@ public class EditItemMenu extends AppCompatActivity {
 
         Intent i = getIntent();
         itemName = i.getStringExtra("itemName");
-        setSwitch = i.getBooleanExtra("set", true);
-        Log.i("isDrink", "" + setSwitch);
         //get string of toppings/customs then split using ',' as delimiter
         customs = i.getStringExtra("customs");
         customsArray = customs.split(",");
@@ -184,13 +183,6 @@ public class EditItemMenu extends AppCompatActivity {
     }
 
 
-    //return to carls jr menu
-    public void back(View view) {
-        Intent i = new Intent(EditItemMenu.this, CarlsJr.class);
-        startActivity(i);
-        finish();
-    }
-
     public void addToCart(View view) {
         RecyclerView recyclerView = findViewById(R.id.editItemRecyclerListView);
         boolean checked;
@@ -203,9 +195,43 @@ public class EditItemMenu extends AppCompatActivity {
             if(checked){
                 order += "," + ingredient;
                 Log.i("Item", order);
+                /*a drink should only have one switch active, therefore if item being edited is a drink
+                then once a switch is turned on there is no need to check the rest of the switches. the price
+                of drink 1 will always be in the 0 position of the recyclerview, 2 in the 1 position and so on
+                */
+                if(CarlsJr.isDrink){
+                    switch (i){
+                        case 0:
+                            drinkPrice = 1.69;
+                            break;
+                        case 1:
+                            drinkPrice = 1.89;
+                            break;
+                        case 2:
+                            drinkPrice = 2.19;
+                            break;
+                        default:
+                            Log.i("Error", "Could not fetch drink price");
+                    }
+                    Log.i("Item", order + String.valueOf(drinkPrice));
+                    break;
+                }
             }
         }
-        //have pop up box to as use if they want to kee shopping or checkout
+    }
+
+    //return to carls jr menu
+    public void back(View view) {
+        Intent i = new Intent(EditItemMenu.this, CarlsJr.class);
+        startActivity(i);
+        finish();
+    }
+
+    //proceed to cart
+    public void checkoutClick(View view) {
+        Intent i = new Intent(this, Cart.class);
+        startActivity(i);
+        finish();
     }
 }
 
