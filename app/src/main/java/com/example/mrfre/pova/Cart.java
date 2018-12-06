@@ -21,8 +21,7 @@ public class Cart extends AppCompatActivity {
     ArrayList<Integer> quantity = new ArrayList<>();
     ArrayList<String>toppings = new ArrayList<>();
     private String orderList2 = "";
-    static ArrayList<Items> myOrder = new ArrayList<Items>();
-
+    ArrayList<Items> myOrder = new ArrayList<Items>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,11 +29,7 @@ public class Cart extends AppCompatActivity {
         setContentView(R.layout.activity_cart);
         setTitle("CART");
 
-
-        Intent i = getIntent();
-        orderList2 = i.getStringExtra("orderList");
-        checkList(myOrder, orderList2);
-
+        myOrder = (ArrayList<Items>) CartLogic.myOrder.clone();
         for (Items ob : myOrder)
         {
             itemNames.add(ob.getName());
@@ -43,60 +38,7 @@ public class Cart extends AppCompatActivity {
             double totalPrice = ob.quantity * ob.getPrice();
             prices.add(totalPrice);
         }
-
         initRecyclerView();
-    }
-
-    //checks for dups, if there is a dup qty is incremented by 1, if not new item is added
-    public static void checkList(ArrayList<Items> myOrder, String order)
-    {
-        //Temporary declarations
-        boolean isSame = false;
-        Items dummyOrder = new Items();
-        dummyOrder.addItem(order);
-
-        //Empty List
-        if (myOrder.size() == 0)
-        {
-            isSame= true;
-            dummyOrder.quantity += 1;
-            myOrder.add(dummyOrder);
-        }
-
-        //Non Empty List checks for duplicate
-        else
-        {
-            for(Items obj : myOrder)
-            {
-                if (dummyOrder.name.equals(obj.name) && dummyOrder.ingredients.equals(obj.ingredients))
-                {
-                    isSame = true;
-                    obj.quantity += 1;
-                }
-            }
-        }
-
-        //Adds to list if duplicate does not exist
-        if (isSame == false)
-        {
-            dummyOrder.quantity += 1;
-            myOrder.add(dummyOrder);
-        }
-    }
-
-    public static void removeItem(ArrayList<Items> myOrder, String order) {
-        Items dummyOrder2 = new Items();
-        dummyOrder2.addItem(order);
-
-
-        if (myOrder.size() != 0) {
-            for (Items obj : myOrder) {
-                if (dummyOrder2.name.equals(obj.name) && dummyOrder2.ingredients.equals(obj.ingredients)) {
-                    obj.quantity -= 1;
-
-                }
-            }
-        }
     }
 
     private void initRecyclerView(){

@@ -34,7 +34,7 @@ public class EditItemMenu extends AppCompatActivity {
     ListView lv;
 
     public static double drinkPrice = 0.0;
-    Cart myCart = new Cart();
+    CartLogic cl = new CartLogic();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -215,16 +215,18 @@ public class EditItemMenu extends AppCompatActivity {
                             Log.i("Error", "Could not fetch drink price");
                     }
                     Log.i("Item", order + String.valueOf(drinkPrice));
-                    Intent intent = new Intent(this, Cart.class);
-                    intent.putExtra("orderList", order);
+                    cl.run(order);
+                    Intent intent = new Intent(this, CarlsJr.class);
+//                    intent.putExtra("orderList", order);
                     startActivity(intent);
                     break;
                 }
-                Intent intent = new Intent(this, Cart.class);
-                intent.putExtra("orderList", order);
-                startActivity(intent);
             }
         }
+        cl.run(order);
+        Intent intent = new Intent(this, CarlsJr.class);
+//                intent.putExtra("orderList", order);
+        startActivity(intent);
         Toast.makeText(this, itemName + " Added to Cart", Toast.LENGTH_SHORT).show();
     }
 

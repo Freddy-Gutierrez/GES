@@ -46,8 +46,7 @@ public class CarlsJr extends AppCompatActivity {
     public static double price = 0.0;
     public static boolean isDrink = false;
 
-    String saveOrder = "";
-    double totalPrice = 0;
+    CartLogic cl = new CartLogic();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -329,16 +328,8 @@ public class CarlsJr extends AppCompatActivity {
                     .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
-                            saveOrder += name + "   " + Double.toString(price) + "\n";
-                            totalPrice += price;
-                            Log.i("Order", saveOrder);
-                            Log.i("Total", Double.toString(totalPrice));
                             Toast.makeText(CarlsJr.this, selection + " added to cart", Toast.LENGTH_LONG).show();
-
-
-                            Intent intent = new Intent(CarlsJr.this, Cart.class);
-                            intent.putExtra("orderList", name + "," + customs);
-                            startActivity(intent);
+                            cl.run(name + "," + customs);
                         }
                     })
                     .setNegativeButton("No", new DialogInterface.OnClickListener() {
@@ -362,16 +353,8 @@ public class CarlsJr extends AppCompatActivity {
                     .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
-                            saveOrder += name + "   " + Double.toString(price) + "\n";
-                            totalPrice += price;
-                            Log.i("Order", saveOrder);
-                            Log.i("Total", Double.toString(totalPrice));
                             Toast.makeText(CarlsJr.this, selection + " added to cart", Toast.LENGTH_LONG).show();
-
-
-                            Intent intent = new Intent(CarlsJr.this, Cart.class);
-                            intent.putExtra("orderList", name + "," + customs);
-                            startActivity(intent);
+                            cl.run(name + "," + customs);
                         }
                     })
                     .setNeutralButton("Edit", new DialogInterface.OnClickListener() {
@@ -421,8 +404,6 @@ public class CarlsJr extends AppCompatActivity {
 
     public void cartClick(View view) {
         Intent i = new Intent(CarlsJr.this, Cart.class);
-        i.putExtra("Order", saveOrder);
-        i.putExtra("Total", totalPrice);
         startActivity(i);
         finish();
     }
