@@ -20,7 +20,9 @@ public class Cart extends AppCompatActivity {
     ArrayList<Double> prices = new ArrayList<>();
     ArrayList<Integer> quantity = new ArrayList<>();
     ArrayList<String>toppings = new ArrayList<>();
-    public static double total = 0.0;
+    private String orderList2 = "";
+    static ArrayList<Items> myOrder = new ArrayList<Items>();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,24 +31,72 @@ public class Cart extends AppCompatActivity {
         setTitle("CART");
 
 
-        itemNames.add("Double Western Bacon Cheeseburger®");itemNames.add("burgerTwo");itemNames.add("Burger3");itemNames.add("burger4");
+        Intent i = getIntent();
+        orderList2 = i.getStringExtra("orderList");
+        checkList(myOrder, orderList2);
 
-        toppings.add("Cheese,BBQ");toppings.add("");toppings.add("Large");toppings.add("Small");
-
-        prices.add(2.56);prices.add(6.45);prices.add(2.34);prices.add(9.78);
-
-        quantity.add(2);quantity.add(4);quantity.add(3);quantity.add(12);
+        for (Items ob : myOrder)
+        {
+            itemNames.add(ob.getName());
+            toppings.add(ob.getIngredients());
+            quantity.add(ob.quantity);
+            double totalPrice = ob.quantity * ob.getPrice();
+            prices.add(totalPrice);
+        }
 
         initRecyclerView();
-        calculateTotal();
-
     }
 
-    private void calculateTotal() {
-        for(int i = 0; i < prices.size(); i++){
-            total += prices.get(i);
+    //checks for dups, if there is a dup qty is incremented by 1, if not new item is added
+    public static void checkList(ArrayList<Items> myOrder, String order)
+    {
+        //Temporary declarations
+        boolean isSame = false;
+        Items dummyOrder = new Items();
+        dummyOrder.addItem(order);
+
+        //Empty List
+        if (myOrder.size() == 0)
+        {
+            isSame= true;
+            dummyOrder.quantity += 1;
+            myOrder.add(dummyOrder);
         }
-        total = Math.round(total*100.0)/100.0;
+
+        //Non Empty List checks for duplicate
+        else
+        {
+            for(Items obj : myOrder)
+            {
+                if (dummyOrder.name.equals(obj.name) && dummyOrder.ingredients.equals(obj.ingredients))
+                {
+                    isSame = true;
+                    obj.quantity += 1;
+                }
+            }
+        }
+
+        //Adds to list if duplicate does not exist
+        if (isSame == false)
+        {
+            dummyOrder.quantity += 1;
+            myOrder.add(dummyOrder);
+        }
+    }
+
+    public static void removeItem(ArrayList<Items> myOrder, String order) {
+        Items dummyOrder2 = new Items();
+        dummyOrder2.addItem(order);
+
+
+        if (myOrder.size() != 0) {
+            for (Items obj : myOrder) {
+                if (dummyOrder2.name.equals(obj.name) && dummyOrder2.ingredients.equals(obj.ingredients)) {
+                    obj.quantity -= 1;
+
+                }
+            }
+        }
     }
 
     private void initRecyclerView(){
@@ -62,4 +112,9 @@ public class Cart extends AppCompatActivity {
         finish();
     }
 
+    public void backToMenu(View view) {
+        Intent i = new Intent(this, CarlsJr.class);
+        startActivity(i);
+        finish();
+    }
 }

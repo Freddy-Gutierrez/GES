@@ -7,16 +7,33 @@
     tools:context=".Cart">
 
 
-    <Button
-        android:id="@+id/checkoutButton"
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginBottom="25dp"
-        android:layout_marginEnd="52dp"
-        android:onClick="checkoutOnClick"
-        android:text="CHECKOUT" />
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="36dp"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/button3"
+            android:layout_width="120dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:onClick="backToMenu"
+            android:text="Menu"
+            android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/buttonCheckout"
+            android:layout_width="120dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:onClick="checkoutOnClick"
+            android:text="Checkout"
+            android:textStyle="bold" />
+
+    </LinearLayout>
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recyclerListView"

@@ -43,7 +43,7 @@ public class CarlsJr extends AppCompatActivity {
     String description = "";
     String customs = "";
     int calories = 0;
-    double price = 0.0;
+    public static double price = 0.0;
     public static boolean isDrink = false;
 
     String saveOrder = "";
@@ -54,7 +54,7 @@ public class CarlsJr extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_carls_jr);
 
-        checkout = (Button)findViewById(R.id.checkoutButton);
+        checkout = (Button)findViewById(R.id.buttonCheckout);
         
         listDataChild = new HashMap<String, List<String>>();
         //drop down headers
@@ -334,6 +334,11 @@ public class CarlsJr extends AppCompatActivity {
                             Log.i("Order", saveOrder);
                             Log.i("Total", Double.toString(totalPrice));
                             Toast.makeText(CarlsJr.this, selection + " added to cart", Toast.LENGTH_LONG).show();
+
+
+                            Intent intent = new Intent(CarlsJr.this, Cart.class);
+                            intent.putExtra("orderList", name + "," + customs);
+                            startActivity(intent);
                         }
                     })
                     .setNegativeButton("No", new DialogInterface.OnClickListener() {
@@ -362,6 +367,11 @@ public class CarlsJr extends AppCompatActivity {
                             Log.i("Order", saveOrder);
                             Log.i("Total", Double.toString(totalPrice));
                             Toast.makeText(CarlsJr.this, selection + " added to cart", Toast.LENGTH_LONG).show();
+
+
+                            Intent intent = new Intent(CarlsJr.this, Cart.class);
+                            intent.putExtra("orderList", name + "," + customs);
+                            startActivity(intent);
                         }
                     })
                     .setNeutralButton("Edit", new DialogInterface.OnClickListener() {

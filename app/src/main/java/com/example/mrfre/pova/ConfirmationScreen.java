@@ -54,6 +54,6 @@ public class ConfirmationScreen extends AppCompatActivity {
     private void setTexts() {
         orderDetails.setText(textDetails + pickUpTime);
         billingInfo.setText(billingText);
-        total.setText("Order Total: $" + Cart.total);
+        total.setText("Order Total: $" + Checkout.total);
     }
 }

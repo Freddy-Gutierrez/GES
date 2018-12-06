@@ -61,6 +61,8 @@ public class Checkout extends AppCompatActivity implements View.OnClickListener 
     ArrayList <String> times = new ArrayList<>();
     ArrayAdapter <String> arrayAdapter;
 
+    public static double total = 0.0;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -226,6 +228,7 @@ public class Checkout extends AppCompatActivity implements View.OnClickListener 
         boolean isValid = getInfo() && verifyExpirationDate() && verifyCardNum() && verifyCSC() && verifyPostalCode() && verifyState();
         if(isValid){
             setPickUpTime();
+            calculateTotal();
             Intent i = new Intent(this, ConfirmationScreen.class);
             i.putExtra("firstN", firstName);
             i.putExtra("middle",middleI);
@@ -263,6 +266,13 @@ public class Checkout extends AppCompatActivity implements View.OnClickListener 
         //PASS TIME INTO CONFIRMATION SCREEN ALONG WITH REST OF VARIABLES THAT WILL BE DISPLAYED
         Log.e("TEST", time);
     }
+    private void calculateTotal() {
+        for(int i = 0; i < RecyclerViewAdapter.prices.size(); i++){
+            total += RecyclerViewAdapter.prices.get(i);
+        }
+        total = Math.round(total*100.0)/100.0;
+    }
+
     @Override
     public void onClick(View view) {
         InputMethodManager mgr = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
