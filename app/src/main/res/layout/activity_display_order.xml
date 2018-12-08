@@ -4,37 +4,42 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".CarlsJr">
+    tools:context=".DisplayOrder">
 
-    <ExpandableListView
-        android:id="@+id/lvExp"
-        android:layout_width="match_parent"
-        android:layout_height="523dp" />
+    <TextView
+        android:id="@+id/textViewOrder"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="10dp"
+        android:textColor="@android:color/black"
+        android:textSize="18sp" />
 
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="30dp"
+        android:layout_marginBottom="43dp"
         android:orientation="horizontal">
 
         <Button
-            android:id="@+id/buttonMain"
+            android:id="@+id/buttonBack"
             android:layout_width="100dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:onClick="main"
-            android:text="MAIN"
+            android:onClick="back"
+            android:text="Back"
             android:textStyle="bold" />
 
         <Button
-            android:id="@+id/buttonCart"
+            android:id="@+id/buttonRemove"
             android:layout_width="100dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:onClick="cartClick"
-            android:text="CART"
+            android:onClick="remove"
+            android:text="Remove"
             android:textStyle="bold" />
     </LinearLayout>
 

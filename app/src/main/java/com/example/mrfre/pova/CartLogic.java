@@ -75,17 +75,4 @@ public class CartLogic {
         }
     }
 
-    public ArrayList<String> getItemNames() {
-        return itemNames;
-    }
-    public ArrayList<String> getToppings() {
-        return toppings;
-    }
-    public ArrayList<Double> getPrices() {
-        return prices;
-    }
-    public ArrayList<Integer> getQuantity() {
-        return quantity;
-    }
-
 }

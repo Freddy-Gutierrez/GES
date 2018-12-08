@@ -1,10 +1,8 @@
 package com.example.mrfre.pova;
 
 import android.content.Context;
-import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,12 +14,12 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 
-public class RecyclerViewAdapter2 extends RecyclerView.Adapter<RecyclerViewAdapter2.ViewHolder>{
+public class EditItemMenuRecyclerViewAdapter extends RecyclerView.Adapter<EditItemMenuRecyclerViewAdapter.ViewHolder>{
 
     private ArrayList<String> toppings;
     private Context context;
 
-    public RecyclerViewAdapter2(Context context, ArrayList<String> toppings) {
+    public EditItemMenuRecyclerViewAdapter(Context context, ArrayList<String> toppings) {
         this.toppings = toppings;
         this.context = context;
     }

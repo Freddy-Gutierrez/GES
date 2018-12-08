@@ -52,6 +52,7 @@ public class CarlsJr extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_carls_jr);
+        setTitle("Carls Jr.");
 
         checkout = (Button)findViewById(R.id.buttonCheckout);
         
@@ -404,6 +405,12 @@ public class CarlsJr extends AppCompatActivity {
 
     public void cartClick(View view) {
         Intent i = new Intent(CarlsJr.this, Cart.class);
+        startActivity(i);
+        finish();
+    }
+
+    public void main(View view) {
+        Intent i = new Intent(this, MainActivity.class);
         startActivity(i);
         finish();
     }

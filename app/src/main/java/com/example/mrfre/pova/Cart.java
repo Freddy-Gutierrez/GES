@@ -6,8 +6,6 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.widget.Button;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -27,7 +25,7 @@ public class Cart extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cart);
-        setTitle("CART");
+        setTitle("Cart");
 
         myOrder = (ArrayList<Items>) CartLogic.myOrder.clone();
         for (Items ob : myOrder)
@@ -43,15 +41,20 @@ public class Cart extends AppCompatActivity {
 
     private void initRecyclerView(){
         RecyclerView recyclerView = findViewById(R.id.recyclerListView);
-        RecyclerViewAdapter adapter = new RecyclerViewAdapter(this,itemNames,toppings,quantity,prices);
+        CartRecyclerViewAdapter adapter = new CartRecyclerViewAdapter(this,itemNames,toppings,quantity,prices);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
     }
 
     public void checkoutOnClick(View view) {
-        Intent i = new Intent(Cart.this, Checkout.class);
-        startActivity(i);
-        finish();
+        if(itemNames.size() == 0){
+            Toast.makeText(this, "Cart is Empty", Toast.LENGTH_SHORT).show();
+        }
+        else{
+            Intent i = new Intent(Cart.this, Checkout.class);
+            startActivity(i);
+            finish();
+        }
     }
 
     public void backToMenu(View view) {

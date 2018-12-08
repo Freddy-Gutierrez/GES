@@ -1,9 +1,7 @@
 package com.example.mrfre.pova;
 
-import android.arch.core.internal.FastSafeIterableMap;
 import android.content.Context;
 import android.content.Intent;
-import android.hardware.input.InputManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -16,7 +14,6 @@ import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 
@@ -67,6 +64,7 @@ public class Checkout extends AppCompatActivity implements View.OnClickListener 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_checkout);
+        setTitle("Checkout");
 
         backgroudRL = (RelativeLayout) findViewById(R.id.background);
         firstNameET = (EditText)findViewById(R.id.editTextFirstName);
@@ -173,14 +171,16 @@ public class Checkout extends AppCompatActivity implements View.OnClickListener 
             Log.i("Failed","month or year length");
         }
         else {
-            if (year <= curYear) {
-                if (month < curMonth) {
+            if (year < curYear) {
+                isValid = false;
+            }
+            else{
+                if(month < curMonth){
                     isValid = false;
-                    Log.i("Failed", "month");
-                    return isValid;
                 }
-            } else {
-                isValid = true;
+                else{
+                    isValid = true;
+                }
             }
         }
         return isValid;
@@ -267,8 +267,8 @@ public class Checkout extends AppCompatActivity implements View.OnClickListener 
         Log.e("TEST", time);
     }
     private void calculateTotal() {
-        for(int i = 0; i < RecyclerViewAdapter.prices.size(); i++){
-            total += RecyclerViewAdapter.prices.get(i);
+        for(int i = 0; i < CartRecyclerViewAdapter.prices.size(); i++){
+            total += CartRecyclerViewAdapter.prices.get(i);
         }
         total = Math.round(total*100.0)/100.0;
     }
@@ -277,5 +277,11 @@ public class Checkout extends AppCompatActivity implements View.OnClickListener 
     public void onClick(View view) {
         InputMethodManager mgr = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
         mgr.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(),0);
+    }
+
+    public void back(View view) {
+        Intent i = new Intent(this, Cart.class);
+        startActivity(i);
+        finish();
     }
 }

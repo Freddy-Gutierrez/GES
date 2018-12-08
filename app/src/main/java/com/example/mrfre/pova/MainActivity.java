@@ -21,9 +21,13 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        myDB.clearTable();
+//        myDB.clearTable();
         addToDB();
+        setAdapter();
 
+    }
+
+    private  void setAdapter(){
         ListView resList = (ListView)findViewById(R.id.resListView);
         ArrayList<String> restaurants = new ArrayList<>();
         ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1, restaurants);
@@ -49,7 +53,6 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
-
     }
     void addToDB() {
         //Insert Burgers into Data Base ////////////////////////////////////////////////////////////

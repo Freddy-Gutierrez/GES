@@ -233,7 +233,4 @@ class Items
 
         return price;
     }
-
-
-
 }

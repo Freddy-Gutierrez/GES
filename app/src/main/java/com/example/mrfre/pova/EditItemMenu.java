@@ -1,18 +1,12 @@
 package com.example.mrfre.pova;
 
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.media.Image;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Switch;
@@ -28,7 +22,7 @@ public class EditItemMenu extends AppCompatActivity {
     String itemName = "";
     String customs = "";
     String order = "";
-    RecyclerViewAdapter2 adapter;
+    EditItemMenuRecyclerViewAdapter adapter;
     String[] customsArray;
     ArrayList<String> toArrayList;
     ListView lv;
@@ -61,7 +55,7 @@ public class EditItemMenu extends AppCompatActivity {
     //pass parameters to RecyclerView2 to inflate recycler view
     private void initRecyclerView() {
         RecyclerView recyclerView = findViewById(R.id.editItemRecyclerListView);
-        adapter = new RecyclerViewAdapter2(this,toArrayList);
+        adapter = new EditItemMenuRecyclerViewAdapter(this,toArrayList);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
     }
@@ -221,9 +215,11 @@ public class EditItemMenu extends AppCompatActivity {
                     startActivity(intent);
                     break;
                 }
+                else{
+                    cl.run(order);
+                }
             }
         }
-        cl.run(order);
         Intent intent = new Intent(this, CarlsJr.class);
 //                intent.putExtra("orderList", order);
         startActivity(intent);

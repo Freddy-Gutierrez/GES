@@ -8,16 +8,12 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.CompoundButton;
 import android.widget.RelativeLayout;
-import android.widget.Switch;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 
-public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder>{
+public class CartRecyclerViewAdapter extends RecyclerView.Adapter<CartRecyclerViewAdapter.ViewHolder>{
 
     public static ArrayList<String> itemNames = new ArrayList<>();
     public static ArrayList<String> toppings = new ArrayList<>();
@@ -26,7 +22,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     private Context context;
     DataBaseHelper myDB;
 
-    public RecyclerViewAdapter(Context context,ArrayList<String> itemNames, ArrayList<String> toppings, ArrayList<Integer> itemQuantities, ArrayList<Double> prices) {
+    public CartRecyclerViewAdapter(Context context, ArrayList<String> itemNames, ArrayList<String> toppings, ArrayList<Integer> itemQuantities, ArrayList<Double> prices) {
         this.itemNames = itemNames;
         this.toppings = toppings;
         this.itemQuantities = itemQuantities;
@@ -49,12 +45,6 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         viewHolder.ingredients.setText(toppings.get(i));
         viewHolder.price.setText("$" + Double.toString(prices.get(i)));
         viewHolder.quantity.setText(Integer.toString(itemQuantities.get(i)));
-        viewHolder.parentLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                setupEditItem(itemNames.get(i));
-            }
-        });
     }
 
     private void setupEditItem(String name) {

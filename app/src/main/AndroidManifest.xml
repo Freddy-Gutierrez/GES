@@ -26,7 +26,8 @@
         <activity android:name=".RecAdapter" />
         <activity android:name=".Checkout" />
         <activity android:name=".ConfirmationScreen" />
-        <activity android:name=".RestaurantView"></activity>
+        <activity android:name=".RestaurantView" />
+        <activity android:name=".DisplayOrder"></activity>
     </application>
 
 </manifest>
