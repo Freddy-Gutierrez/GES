@@ -213,14 +213,13 @@ public class EditItemMenu extends AppCompatActivity {
                     CarlsJr.totalCalories += CarlsJr.calories;
                     Intent intent = new Intent(this, CarlsJr.class);
                     startActivity(intent);
-                    break;
-                }
-                else{
-                    CarlsJr.totalCalories += CarlsJr.calories;
-                    cl.run(order);
+                    finish();
+                    return;
                 }
             }
         }
+        CarlsJr.totalCalories += CarlsJr.calories;
+        cl.run(order);
         Intent intent = new Intent(this, CarlsJr.class);
         startActivity(intent);
         Toast.makeText(this, itemName + " Added to Cart", Toast.LENGTH_SHORT).show();
