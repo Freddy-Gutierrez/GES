@@ -7,6 +7,13 @@
     tools:context=".Cart">
 
 
+    <ImageView
+        android:id="@+id/imageViewSadCart"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="invisible"
+        app:srcCompat="@drawable/sadcart" />
+
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -43,6 +50,16 @@
         android:layout_alignParentTop="true"
         android:layout_marginTop="0dp"></android.support.v7.widget.RecyclerView>
 
+    <TextView
+        android:id="@+id/textViewTotals"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="101dp"
+        android:text="TextView"
+        android:textColor="@android:color/black"
+        android:textSize="18sp" />
 
 
 </RelativeLayout>

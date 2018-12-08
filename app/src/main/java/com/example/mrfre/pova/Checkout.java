@@ -174,13 +174,16 @@ public class Checkout extends AppCompatActivity implements View.OnClickListener 
             if (year < curYear) {
                 isValid = false;
             }
+            else if(year > curYear) { //year >= curYear
+                isValid = true;
+            }
             else{
-                if(month < curMonth){
+               if(month < curMonth){ //2018/ 09
                     isValid = false;
                 }
                 else{
                     isValid = true;
-                }
+               }
             }
         }
         return isValid;
@@ -262,7 +265,12 @@ public class Checkout extends AppCompatActivity implements View.OnClickListener 
         else{
             m += timeSelected;
         }
-        time = h + ":" + m;
+        if(m < 10){
+            time = h + ":0" + m;
+        }
+        else{
+            time = h + ":" + m;
+        }
         //PASS TIME INTO CONFIRMATION SCREEN ALONG WITH REST OF VARIABLES THAT WILL BE DISPLAYED
         Log.e("TEST", time);
     }

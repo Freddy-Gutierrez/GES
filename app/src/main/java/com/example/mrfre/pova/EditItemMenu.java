@@ -210,18 +210,18 @@ public class EditItemMenu extends AppCompatActivity {
                     }
                     Log.i("Item", order + String.valueOf(drinkPrice));
                     cl.run(order);
+                    CarlsJr.totalCalories += CarlsJr.calories;
                     Intent intent = new Intent(this, CarlsJr.class);
-//                    intent.putExtra("orderList", order);
                     startActivity(intent);
                     break;
                 }
                 else{
+                    CarlsJr.totalCalories += CarlsJr.calories;
                     cl.run(order);
                 }
             }
         }
         Intent intent = new Intent(this, CarlsJr.class);
-//                intent.putExtra("orderList", order);
         startActivity(intent);
         Toast.makeText(this, itemName + " Added to Cart", Toast.LENGTH_SHORT).show();
     }

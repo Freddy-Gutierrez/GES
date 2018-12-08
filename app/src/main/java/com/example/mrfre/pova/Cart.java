@@ -1,11 +1,14 @@
 package com.example.mrfre.pova;
 
 import android.content.Intent;
+import android.provider.ContactsContract;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -20,6 +23,9 @@ public class Cart extends AppCompatActivity {
     ArrayList<String>toppings = new ArrayList<>();
     private String orderList2 = "";
     ArrayList<Items> myOrder = new ArrayList<Items>();
+    double total = 0.0;
+    TextView totals;
+    ImageView sad;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,6 +33,8 @@ public class Cart extends AppCompatActivity {
         setContentView(R.layout.activity_cart);
         setTitle("Cart");
 
+        totals = (TextView)findViewById(R.id.textViewTotals);
+        sad = (ImageView)findViewById(R.id.imageViewSadCart);
         myOrder = (ArrayList<Items>) CartLogic.myOrder.clone();
         for (Items ob : myOrder)
         {
@@ -36,7 +44,16 @@ public class Cart extends AppCompatActivity {
             double totalPrice = ob.quantity * ob.getPrice();
             prices.add(totalPrice);
         }
-        initRecyclerView();
+        if(itemNames.size() == 0){
+            sad.setVisibility(View.VISIBLE);
+            totals.setText("*Sigh Cart is Empty...");
+        }
+        else {
+            sad.setVisibility(View.INVISIBLE);
+            initRecyclerView();
+            calculateTotal();
+            totals.setText("Total Price: $" + String.valueOf(total) + "\n" + "Total Calories: " + CarlsJr.totalCalories);
+        }
     }
 
     private void initRecyclerView(){
@@ -61,5 +78,12 @@ public class Cart extends AppCompatActivity {
         Intent i = new Intent(this, CarlsJr.class);
         startActivity(i);
         finish();
+    }
+
+    private void calculateTotal() {
+        for(int i = 0; i < prices.size(); i++){
+            total += prices.get(i);
+        }
+        total = Math.round(total*100.0)/100.0;
     }
 }

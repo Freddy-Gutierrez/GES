@@ -42,8 +42,9 @@ public class CarlsJr extends AppCompatActivity {
     String name = "";
     String description = "";
     String customs = "";
-    int calories = 0;
     public static double price = 0.0;
+    public static int totalCalories = 0;
+    public static int calories = 0;
     public static boolean isDrink = false;
 
     CartLogic cl = new CartLogic();
@@ -330,6 +331,7 @@ public class CarlsJr extends AppCompatActivity {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
                             Toast.makeText(CarlsJr.this, selection + " added to cart", Toast.LENGTH_LONG).show();
+                            totalCalories += calories;
                             cl.run(name + "," + customs);
                         }
                     })
@@ -354,6 +356,7 @@ public class CarlsJr extends AppCompatActivity {
                     .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
+                            totalCalories += calories;
                             Toast.makeText(CarlsJr.this, selection + " added to cart", Toast.LENGTH_LONG).show();
                             cl.run(name + "," + customs);
                         }

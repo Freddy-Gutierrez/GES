@@ -89,6 +89,9 @@ public class ConfirmationScreen extends AppCompatActivity {
     }
 
     public void home(View view) {
+        CartLogic.myOrder.clear();
+        CarlsJr.totalCalories = 0;
+        CarlsJr.calories = 0;
         Intent i = new Intent(this, MainActivity.class);
         startActivity(i);
         finish();
